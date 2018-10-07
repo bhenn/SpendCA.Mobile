@@ -10,6 +10,7 @@ import AuthLoadingScreen from "../components/AuthLoadingScreen";
 import NavigationService from "../../NavigationService";
 import CategoriesScreen from "../components/CategoriesScreen";
 import CategoryAddScreen from "../components/CategoryAddScreen";
+import SettingsScreen from '../components/SettingsScreen';
 
 const HomeStack = createStackNavigator({
     Home: HomeScreen,
@@ -17,8 +18,9 @@ const HomeStack = createStackNavigator({
 })
 
 const SettingsStack = createStackNavigator({
-    Settings: CategoriesScreen,
-    CategoryAdd: CategoryAddScreen
+    Settings: SettingsScreen,
+    Categories: CategoriesScreen,
+    CategoryAdd: CategoryAddScreen,
 })
 
 const AuthStack = createStackNavigator({
@@ -36,7 +38,7 @@ const TabNavigator = createBottomTabNavigator({
             const { routeName } = navigation.state;
             let iconName;
             if (routeName === 'Home') {
-                iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+                iconName = `ios-basket${focused ? '' : '-outline'}`;
             } else if (routeName === 'Settings') {
                 iconName = `ios-options${focused ? '' : '-outline'}`;
             }

@@ -1,34 +1,14 @@
 import React from "react";
-import {
-    View,
-    FlatList,
-    Text,
-    TouchableOpacity,
-    StyleSheet
-} from "react-native";
-import { Icon, ListItem, Button } from "react-native-elements";
+import { View, FlatList, TouchableOpacity } from "react-native";
+import { Icon, ListItem, List } from "react-native-elements";
 import { connect } from "react-redux";
 import { categoryFetch } from "../actions/CategoryActions";
 import NavigationService from "../../NavigationService";
-import firebase from 'firebase'
 
-class MyListItem extends React.PureComponent {
-    render() {
-        return (
-            <TouchableOpacity>
-                <View>
-                    <View style={{ flex: 1 }}>
-                        <Text>{this.props.title}</Text>
-                    </View>
-                </View>
-            </TouchableOpacity>
-        );
-    }
-}
-
-class SettingsScreen extends React.Component {
+class CategoriesScreen extends React.Component {
     static navigationOptions = {
-        title: "SETTINGS",
+        headerTintColor: "black",
+        title: "CATEGORIES",
         headerStyle: {
             backgroundColor: "#b2dbbf"
         },
@@ -49,29 +29,18 @@ class SettingsScreen extends React.Component {
         this.props.categoryFetch();
     }
 
-    _renderItem({ item }) {
-        return <ListItem title={item.description} />;
-    }
-
-    _logout(){
-        firebase.auth().signOut()
-    }
-
     render() {
         return (
             <View>
-                <View>
-                    <FlatList
-                        renderItem={this._renderItem}
-                        data={this.props.categories}
-                    />
-                </View>
-                <View>
-                    <Button
-                        onPress={() => this._logout()}
-                        title="Logout"
-                    />
-                </View>
+                <List>
+                    {this.props.categories.map(item => (
+                        <ListItem
+                            key={item.description}
+                            title={item.description}
+                            hideChevron={true}
+                        />
+                    ))}
+                </List>
             </View>
         );
     }
@@ -81,9 +50,7 @@ mapStateToProps = state => ({
     categories: state.CategoryListReducer.categories
 });
 
-const styles = StyleSheet.create({});
-
 export default connect(
     mapStateToProps,
     { categoryFetch }
-)(SettingsScreen);
+)(CategoriesScreen);

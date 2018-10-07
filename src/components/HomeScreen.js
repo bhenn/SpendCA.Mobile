@@ -33,7 +33,7 @@ class MyListItemCategory extends React.PureComponent {
     render() {
         return (
             <TouchableOpacity>
-                <View style={{backgroundColor: '#ede1a1', width: 70, height: 70,  margin: 3, padding: 4}}>
+                <View style={{backgroundColor: 'white', width: 70, height: 70,  margin: 3, padding: 4}}>
                     <View style={{flex: 1}}>
                         <Text>{this.props.category}</Text>
                     </View>
