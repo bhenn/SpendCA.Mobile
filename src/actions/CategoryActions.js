@@ -7,6 +7,7 @@ import {
 } from "../actions/types";
 import b64 from "base-64";
 import firebase from "firebase";
+import NavigationService from "../../NavigationService";
 
 export const changeDescription = text => {
     return {
@@ -24,7 +25,10 @@ export const addCategory = (description) => {
             .database()
             .ref(`category/${email}`)
             .push({ description })
-            .then(() => dispatch({type: CATEGORY_ADD_SUCCESS}))
+            .then(() => {
+                dispatch({type: CATEGORY_ADD_SUCCESS})
+                NavigationService.navigate("Categories");
+            })
             .catch(error => dispatch({type: CATEGORY_ADD_ERROR, payload: error.message}));
     };
 };

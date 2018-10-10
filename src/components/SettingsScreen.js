@@ -50,7 +50,7 @@ class SettingsScreen extends React.Component {
                         {list.map(item => (
                             <TouchableOpacity onPress={() => this._itemClick(item.key)}>
                                 <ListItem
-                                    key={item.title}
+                                    key={item.key}
                                     title={item.title}
                                     leftIcon={{ name: item.icon }}
                                 />

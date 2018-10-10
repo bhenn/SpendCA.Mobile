@@ -1,18 +1,24 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, StyleSheet} from "react-native";
+import { View, StyleSheet, ImageBackground } from "react-native";
 import { FormInput, FormLabel, Button, Text } from "react-native-elements";
 import { changeEmail, changePassword, doLogin } from "../actions/UserActions";
 
 class loginScreen extends Component {
-    
     static navigationOptions = {
-        headerMode: 'none'
-    }
+        headerMode: "none"
+    };
 
     render() {
         return (
+            // <ImageBackground
+            // source={require("./../../background.jpg")}
+            //         style={{ width: "100%", height: "100%" }}
+            // >
             <View style={styles.container}>
+                
+                    
+                
                 <View style={styles.loginView}>
                     <View style={styles.loginTitle}>
                         <View>
@@ -62,9 +68,17 @@ class loginScreen extends Component {
                 </View>
                 <View style={styles.newAccount}>
                     <Text style={{ color: "grey" }}>New here ?</Text>
-                    <Text style={{ color: "grey" }} onPress={() => this.props.navigation.navigate('NewAccount')}>Create an account</Text> 
+                    <Text
+                        style={{ color: "grey" }}
+                        onPress={() =>
+                            this.props.navigation.navigate("NewAccount")
+                        }
+                    >
+                        Create an account
+                    </Text>
                 </View>
             </View>
+            // </ImageBackground>
         );
     }
 }

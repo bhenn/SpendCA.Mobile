@@ -24,8 +24,9 @@ class CategoryAddScreen extends Component {
                     value={this.props.description}
                     onChangeText={text => this.props.changeDescription(text)}
                 />
-
-                <Button onPress={() => this._addCategory()} title="Submit" />
+                <Button 
+                style={{marginTop:10}}
+                onPress={() => this._addCategory()} title="Save" />
             </View>
         );
     }

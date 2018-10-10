@@ -62,8 +62,6 @@ const addSpendSuccess = dispatch => {
 };
 
 const addSpendError = dispatch => {
-    console.error(error);
-
     dispatch({
         type: ADD_SPEND_SUCCESS
     });

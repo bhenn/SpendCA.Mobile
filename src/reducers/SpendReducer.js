@@ -2,7 +2,7 @@ import { CHANGE_DESCRIPTION , CHANGE_CATEGORY, CHANGE_VALUE , ADD_SPEND, ADD_SPE
 
 
 const INITIAL_STATE = {
-    description: 'testeasd',
+    description: '',
     value: '',
     category: '',
     date: '',
