@@ -7,7 +7,8 @@ import {
     changeValue,
     changeCategory,
     changeDate,
-    addSpend
+    addSpend,
+    alterSpend,
 } from "../actions/SpendActions";
 import { categoryFetch } from "../actions/CategoryActions";
 import SimplePicker from "react-native-simple-picker";
@@ -28,16 +29,28 @@ class SpendAddScreen extends Component {
 
     componentWillMount() {
         this.props.categoryFetch();
-        this.props.changeDate(new Date())
+        // if (this.props.date == undefined || this.props.date == ''){
+        //     this.props.changeDate(new Date())
+        // }
     }
 
-    _addSpend() {
-        this.props.addSpend(
-            this.props.description,
-            this.props.value,
-            this.props.category,
-            this.props.date,
-        );
+    _saveSpend() {
+        if (this.props.uid != ''){
+            this.props.alterSpend({
+                uid: this.props.uid, 
+                description: this.props.description,
+                value: this.props.value,
+                category: this.props.category,
+                date: this.props.date,
+            });
+        }else{
+            this.props.addSpend(
+                this.props.description,
+                this.props.value,
+                this.props.category,
+                this.props.date,
+            );
+        }
     }
 
     render() {
@@ -88,10 +101,11 @@ class SpendAddScreen extends Component {
                     onChangeText={text => this.props.changeValue(text)}
                     keyboardType={"numeric"}
                 />
+                <Text>{this.props.uid}</Text>
                 <Button
                     style={{ marginTop: 15 }}
-                    onPress={() => this._addSpend()}
-                    title="Submit"
+                    onPress={() => this._saveSpend()}
+                    title="Save"
                 />
             </View>
         );
@@ -99,6 +113,7 @@ class SpendAddScreen extends Component {
 }
 
 const mapStateToProps = state => ({
+    uid: state.SpendReducer.uid,
     value: state.SpendReducer.value,
     description: state.SpendReducer.description,
     date: state.SpendReducer.date,
@@ -114,6 +129,7 @@ export default connect(
         changeCategory,
         changeDate,
         addSpend,
-        categoryFetch
+        categoryFetch,
+        alterSpend
     }
 )(SpendAddScreen);

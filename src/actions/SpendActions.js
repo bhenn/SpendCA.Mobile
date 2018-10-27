@@ -2,9 +2,14 @@ import {
     CHANGE_DESCRIPTION,
     CHANGE_CATEGORY,
     CHANGE_VALUE,
+    PRE_ADD_SPEND,
     ADD_SPEND_SUCCESS,
+    ADD_SPEND_ERROR,
+    ALTER_SPEND_SUCCESS,
+    ALTER_SPEND_ERROR,
     LIST_SPENDS,
     CHANGE_DATE,
+    CHANGE_SPEND,
 } from "../actions/types";
 import b64 from "base-64";
 import firebase from "firebase";
@@ -37,6 +42,12 @@ export const changeDate = text => {
     };
 };
 
+export const preAddSpend = () => {
+    return {
+        type: PRE_ADD_SPEND
+    }
+}
+
 export const addSpend = (description, value, category, date) => {
 
     let email = b64.encode(firebase.auth().currentUser.email);
@@ -55,6 +66,35 @@ export const addSpend = (description, value, category, date) => {
     };
 };
 
+export const alterSpend = (spend) => {
+    let email = b64.encode(firebase.auth().currentUser.email);
+    let {value, description, date, category, uid} = spend
+
+    console.log('spend',spend)
+    console.log('valueees', {value, description, date, category, uid})
+
+    //TODO - Find a better way to convert to number
+    value = Number(value)
+    date = date.toString()
+
+    return dispatch => {
+        firebase
+            .database()
+            .ref(`spend/${email}/${uid}`)
+            // .push({ description, value, category, date })
+            .set({ description, value, category, date })
+            .then(() => alterSpendSuccess(dispatch))
+            .catch(error => alterSpendError(dispatch, error));
+    };
+}
+
+export const changeSpend = spend => {
+    return {
+        type: CHANGE_SPEND,
+        payload: spend
+    }
+}
+
 const addSpendSuccess = dispatch => {
     dispatch({
         type: ADD_SPEND_SUCCESS
@@ -63,13 +103,24 @@ const addSpendSuccess = dispatch => {
 
 const addSpendError = dispatch => {
     dispatch({
-        type: ADD_SPEND_SUCCESS
+        type: ADD_SPEND_ERROR
+    });
+};
+
+const alterSpendSuccess = dispatch => {
+    dispatch({
+        type: ALTER_SPEND_SUCCESS
+    });
+};
+
+const alterSpendError = dispatch => {
+    dispatch({
+        type: ALTER_SPEND_ERROR
     });
 };
 
 export const gastosFetch = () => {
     let email = b64.encode(firebase.auth().currentUser.email);
-
     return dispatch => {
         firebase
             .database()
