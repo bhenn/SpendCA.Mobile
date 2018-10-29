@@ -1,11 +1,5 @@
 import React from "react";
-import {
-    View,
-    FlatList,
-    Text,
-    TouchableOpacity,
-    StyleSheet
-} from "react-native";
+import { View, FlatList, Text, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { gastosFetch, preAddSpend } from "../actions/SpendActions";
 import NavigationService from "../../NavigationService";
@@ -67,30 +61,29 @@ class HomeScreen extends React.Component {
 
     render() {
         return (
-            <View style={styles.contentView}>
-                <View>
-                    <FlatList
-                        data={this.props.categories}
-                        renderItem={this._renderItemCategory}
-                        contentContainerStyle={{ flexDirection: "row" }}
-                        keyExtractor={item => item.category}
-                    />
+            <View>
+                <FlatList
+                    data={this.props.categories}
+                    renderItem={this._renderItemCategory}
+                    contentContainerStyle={{ flexDirection: "row" }}
+                    keyExtractor={item => item.category}
+                />
 
-                    <FlatList
-                        renderItem={this._renderItem}
-                        data={this.props.spends}
-                        keyExtractor={item => item.uid}
-                    />
-                </View>
-                <View style={styles.addButtonView}>
-                    <ActionButton
-                        buttonColor="#b2dbbf"
-                        onPress={() => {
-                            this.props.preAddSpend();
-                            NavigationService.navigate("SpendAdd");
-                        }}
-                    />
-                </View>
+                <FlatList
+                    renderItem={this._renderItem}
+                    data={this.props.spends}
+                    keyExtractor={item => item.uid}
+                />
+
+                <ActionButton
+                    buttonColor="#b2dbbf"
+                    offsetX={30}
+                    offsetY={30}
+                    onPress={() => {
+                        this.props.preAddSpend();
+                        NavigationService.navigate("SpendAdd");
+                    }}
+                />
             </View>
         );
     }
@@ -99,17 +92,6 @@ class HomeScreen extends React.Component {
 mapStateToProps = state => ({
     spends: state.SpendListReducer.spends,
     categories: state.SpendListReducer.categories
-});
-
-const styles = StyleSheet.create({
-    contentView: {
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: "space-between"
-    },
-    addButtonView: {
-        marginBottom: 120
-    }
 });
 
 export default connect(
