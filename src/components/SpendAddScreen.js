@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity } from "react-native";
-import { FormLabel, FormInput, Button, Text } from "react-native-elements";
+import { FormLabel, FormInput, Button } from "react-native-elements";
 import { connect } from "react-redux";
 import {
     changeDescription,
@@ -29,9 +29,6 @@ class SpendAddScreen extends Component {
 
     componentWillMount() {
         this.props.categoryFetch();
-        // if (this.props.date == undefined || this.props.date == ''){
-        //     this.props.changeDate(new Date())
-        // }
     }
 
     _saveSpend() {
@@ -101,7 +98,6 @@ class SpendAddScreen extends Component {
                     onChangeText={text => this.props.changeValue(text)}
                     keyboardType={"numeric"}
                 />
-                <Text>{this.props.uid}</Text>
                 <Button
                     style={{ marginTop: 15 }}
                     onPress={() => this._saveSpend()}

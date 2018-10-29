@@ -6,12 +6,18 @@ import moment from 'moment'
 import { connect } from "react-redux";
 
 class SpendItem extends React.PureComponent {
+
     _changeSpend(spend){
         this.props.changeSpend(spend)
         NavigationService.navigate("SpendAdd")
     }
 
     render() {
+
+        const formatter = new Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 2
+        })
+
         return (
             <TouchableOpacity onPress={() => this._changeSpend({date: this.props.date, category: this.props.category, description: this.props.description, value: this.props.value, uid: this.props.uid })}>
                 <View style={styles.line}>
@@ -24,7 +30,7 @@ class SpendItem extends React.PureComponent {
                         <Text style={styles.description}>{this.props.description}</Text>
                     </View>
                     <View style={{flex: 1}}>
-                        <Text style={styles.amount}>{this.props.value}</Text>
+                        <Text style={styles.amount}>{formatter.format(this.props.value)}</Text>
                     </View>
                 </View>
             </TouchableOpacity>

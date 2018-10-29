@@ -13,6 +13,7 @@ import {
 } from "../actions/types";
 import b64 from "base-64";
 import firebase from "firebase";
+import NavigationService from "../../NavigationService";
 
 export const changeDescription = text => {
     return {
@@ -70,9 +71,6 @@ export const alterSpend = (spend) => {
     let email = b64.encode(firebase.auth().currentUser.email);
     let {value, description, date, category, uid} = spend
 
-    console.log('spend',spend)
-    console.log('valueees', {value, description, date, category, uid})
-
     //TODO - Find a better way to convert to number
     value = Number(value)
     date = date.toString()
@@ -81,7 +79,6 @@ export const alterSpend = (spend) => {
         firebase
             .database()
             .ref(`spend/${email}/${uid}`)
-            // .push({ description, value, category, date })
             .set({ description, value, category, date })
             .then(() => alterSpendSuccess(dispatch))
             .catch(error => alterSpendError(dispatch, error));
@@ -111,6 +108,7 @@ const alterSpendSuccess = dispatch => {
     dispatch({
         type: ALTER_SPEND_SUCCESS
     });
+    NavigationService.navigate('Home')
 };
 
 const alterSpendError = dispatch => {
