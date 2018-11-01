@@ -1,9 +1,10 @@
 import React from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { Icon, ListItem, List } from "react-native-elements";
 import { connect } from "react-redux";
 import { categoryFetch } from "../actions/CategoryActions";
 import NavigationService from "../../NavigationService";
+import ActionButton from "react-native-action-button";
 
 class CategoriesScreen extends React.Component {
     static navigationOptions = {
@@ -15,13 +16,7 @@ class CategoriesScreen extends React.Component {
         headerRight: (
             <View
                 style={{ width: 35, alignContent: "center", marginRight: 20 }}
-            >
-                <TouchableOpacity
-                    onPress={() => NavigationService.navigate("CategoryAdd")}
-                >
-                    <Icon name="add" fontSize="20" style={{ marginRight: 5 }} />
-                </TouchableOpacity>
-            </View>
+            />
         )
     };
 
@@ -31,7 +26,7 @@ class CategoriesScreen extends React.Component {
 
     render() {
         return (
-            <View>
+            <View style={{ flex: 1 }}>
                 <List>
                     {this.props.categories.map(item => (
                         <ListItem
@@ -41,6 +36,14 @@ class CategoriesScreen extends React.Component {
                         />
                     ))}
                 </List>
+                <ActionButton
+                    buttonColor="#b2dbbf"
+                    offsetX={30}
+                    offsetY={30}
+                    onPress={() => {
+                        NavigationService.navigate("CategoryAdd");
+                    }}
+                />
             </View>
         );
     }

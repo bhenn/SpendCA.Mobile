@@ -61,7 +61,7 @@ class HomeScreen extends React.Component {
 
     render() {
         return (
-            <View>
+            <View style={{flex: 1}}>
                 <FlatList
                     data={this.props.categories}
                     renderItem={this._renderItemCategory}
