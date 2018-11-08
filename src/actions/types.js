@@ -21,6 +21,8 @@ export const ADD_SPEND_SUCCESS = 'add_spend_success';
 export const ADD_SPEND_ERROR = 'add_spend_error';
 export const ALTER_SPEND_SUCCESS = 'alter_spend_success';
 export const ALTER_SPEND_ERROR = 'alter_spend_error';
+export const REMOVE_SPEND_SUCCESS = 'remove_spend_success';
+export const REMOVE_SPEND_ERROR = 'remove_spend_error';
 export const LIST_SPENDS = 'list_spends';
 export const CHANGE_SPEND = 'change_spend';
 

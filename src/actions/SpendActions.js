@@ -10,6 +10,8 @@ import {
     LIST_SPENDS,
     CHANGE_DATE,
     CHANGE_SPEND,
+    REMOVE_SPEND_ERROR,
+    REMOVE_SPEND_SUCCESS,
 } from "../actions/types";
 import b64 from "base-64";
 import firebase from "firebase";
@@ -85,6 +87,26 @@ export const alterSpend = (spend) => {
     };
 }
 
+export const deleteSpend = (uid) => {
+    let email = b64.encode(firebase.auth().currentUser.email);
+
+    if (uid == '' || uid == undefined){
+        return {
+            type: REMOVE_SPEND_ERROR,
+            payload: 'UID not informed'
+        }
+    }
+
+    return dispatch => {
+        firebase
+            .database()
+            .ref(`spend/${email}/${uid}`)
+            .remove()
+            .then(() => removeSpendSuccess(dispatch))
+            .catch(error => removeSpendError(dispatch, error));
+    };
+}
+
 export const changeSpend = spend => {
     return {
         type: CHANGE_SPEND,
@@ -116,6 +138,20 @@ const alterSpendError = dispatch => {
         type: ALTER_SPEND_ERROR
     });
 };
+
+const removeSpendSuccess = dispatch => {
+    dispatch({
+        type: REMOVE_SPEND_SUCCESS
+    });
+    NavigationService.navigate('Home')
+};
+
+const removeSpendError = dispatch => {
+    dispatch({
+        type: REMOVE_SPEND_ERROR
+    });
+};
+
 
 export const gastosFetch = () => {
     let email = b64.encode(firebase.auth().currentUser.email);
