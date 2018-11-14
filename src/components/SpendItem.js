@@ -22,8 +22,8 @@ class SpendItem extends React.PureComponent {
             <TouchableOpacity onPress={() => this._changeSpend({date: this.props.date, category: this.props.category, description: this.props.description, value: this.props.value, uid: this.props.uid })}>
                 <View style={styles.line}>
                     <View style={{flex: 0.5}}>
-                        <Text style={styles.month}>{moment(this.props.date).format('MMM')}</Text>
-                        <Text style={styles.day}>{moment(this.props.date).format('DD')}</Text>
+                        <Text style={styles.month}>{moment(new Date(this.props.date)).format('MMM')}</Text>
+                        <Text style={styles.day}>{moment(new Date(this.props.date)).format('DD')}</Text>
                     </View>
                     <View style={{flex: 3}}>
                         <Text style={styles.category}>{this.props.category}</Text>

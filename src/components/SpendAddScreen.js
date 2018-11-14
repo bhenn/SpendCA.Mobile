@@ -74,7 +74,7 @@ class SpendAddScreen extends Component {
                 >
                     <FormLabel>Date</FormLabel>
                     <FormInput
-                        value={moment(this.props.date).format("LL")}
+                        value={moment(new Date(this.props.date)).format("LL")}
                         editable={false}
                         pointerEvents="none"
                     />
