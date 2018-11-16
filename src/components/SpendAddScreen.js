@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { FormLabel, FormInput, Button } from "react-native-elements";
 import { connect } from "react-redux";
 import {
@@ -15,6 +15,7 @@ import { categoryFetch } from "../actions/CategoryActions";
 import SimplePicker from "react-native-simple-picker";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import moment from "moment";
+import { TextInputMask } from "react-native-masked-text";
 
 class SpendAddScreen extends Component {
     static navigationOptions = {
@@ -69,6 +70,14 @@ class SpendAddScreen extends Component {
 
         return (
             <View>
+                <TextInputMask
+                    style={styles.input}
+                    value={this.props.value}
+                    onChangeText={text => this.props.changeValue(text)}
+                    type="money"
+                    options={{ separator: '.', delimiter: ',', unit: '' }}
+                    maxLength={10}
+                />
                 <TouchableOpacity
                     onPress={() => this.setState({ datePickerVisible: true })}
                 >
@@ -108,12 +117,13 @@ class SpendAddScreen extends Component {
                         this.props.changeCategory(option);
                     }}
                 />
-                <FormLabel>Value</FormLabel>
+                {/* <FormLabel>Value</FormLabel>
                 <FormInput
                     value={this.props.value}
                     onChangeText={text => this.props.changeValue(text)}
                     keyboardType={"numeric"}
-                />
+                /> */}
+
                 <Button
                     style={{ marginTop: 15 }}
                     onPress={() => this._saveSpend()}
@@ -147,3 +157,17 @@ export default connect(
         deleteSpend
     }
 )(SpendAddScreen);
+
+const styles = StyleSheet.create({
+    input: {
+        marginTop: 50,
+        marginBottom: 50,
+        height: 40,
+        justifyContent: 'center',
+        textAlign: 'center',
+        fontSize: 36,
+        borderWidth: 0.5,
+        borderColor: 'white',
+        color: '#909ca6',
+    }
+});

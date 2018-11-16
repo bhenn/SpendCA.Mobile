@@ -41,7 +41,7 @@ export default (state = INITIAL_STATE, action) => {
             };
 
         case PRE_ADD_SPEND:
-            return {...state, category: '', value: '', description: '', uid: '', date: new Date()};
+            return {...state, category: '', value: '0', description: '', uid: '', date: new Date()};
 
         case ADD_SPEND_SUCCESS:
             return { ...state, category: "", value: "", description: "" };

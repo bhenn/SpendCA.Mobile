@@ -7,6 +7,9 @@ import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import combineReducers from "./src/reducers/index";
 
+
+//import StorybookUIRoot from "./storybook";
+
 const store = createStore(combineReducers, {}, applyMiddleware(ReduxThunk));
 class App extends Component {
     componentWillMount() {
@@ -27,3 +30,4 @@ class App extends Component {
 }
 
 export default App;
+//export default StorybookUIRoot
