@@ -17,6 +17,7 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 import moment from "moment";
 import { TextInputMask } from "react-native-masked-text";
 
+
 class SpendAddScreen extends Component {
     static navigationOptions = {
         headerTintColor: "black",
@@ -34,18 +35,21 @@ class SpendAddScreen extends Component {
     }
 
     _saveSpend() {
+        //TODO find a better way to transform in int
+        let value = this.props.value.replace(',','').replace(',','').replace(',','') * 100
+
         if (this.props.uid != "") {
             this.props.alterSpend({
                 uid: this.props.uid,
                 description: this.props.description,
-                value: this.props.value,
+                value: value,
                 category: this.props.category,
                 date: this.props.date
             });
         } else {
             this.props.addSpend(
                 this.props.description,
-                this.props.value,
+                value,
                 this.props.category,
                 this.props.date
             );
@@ -117,13 +121,6 @@ class SpendAddScreen extends Component {
                         this.props.changeCategory(option);
                     }}
                 />
-                {/* <FormLabel>Value</FormLabel>
-                <FormInput
-                    value={this.props.value}
-                    onChangeText={text => this.props.changeValue(text)}
-                    keyboardType={"numeric"}
-                /> */}
-
                 <Button
                     style={{ marginTop: 15 }}
                     onPress={() => this._saveSpend()}

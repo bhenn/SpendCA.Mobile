@@ -5,6 +5,7 @@ import { gastosFetch, preAddSpend } from "../actions/SpendActions";
 import NavigationService from "../../NavigationService";
 import SpendItem from "./SpendItem";
 import ActionButton from "react-native-action-button";
+import Dinero from '../../node_modules/dinero.js/build/esm/dinero'
 
 class MyListItemCategory extends React.PureComponent {
     render() {
@@ -23,7 +24,7 @@ class MyListItemCategory extends React.PureComponent {
                         <Text>{this.props.category}</Text>
                     </View>
                     <View style={{ flex: 1 }}>
-                        <Text>{this.props.sum}</Text>
+                        <Text>{Dinero({amount: this.props.sum}).toFormat()}</Text>
                     </View>
                 </View>
             </TouchableOpacity>

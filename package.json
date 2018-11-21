@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "base-64": "^0.1.0",
+    "dinero.js": "^1.4.0",
     "firebase": "^5.4.0",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",

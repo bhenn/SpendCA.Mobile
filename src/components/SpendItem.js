@@ -4,6 +4,7 @@ import { changeSpend } from "../actions/SpendActions";
 import NavigationService from "../../NavigationService";
 import moment from 'moment'
 import { connect } from "react-redux";
+import Dinero from '../../node_modules/dinero.js/build/esm/dinero'
 
 class SpendItem extends React.PureComponent {
 
@@ -30,7 +31,7 @@ class SpendItem extends React.PureComponent {
                         <Text style={styles.description}>{this.props.description}</Text>
                     </View>
                     <View style={{flex: 1}}>
-                        <Text style={styles.amount}>{formatter.format(this.props.value)}</Text>
+                        <Text style={styles.amount}>{Dinero({amount: this.props.value}).toFormat()}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
