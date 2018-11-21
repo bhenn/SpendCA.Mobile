@@ -35,8 +35,14 @@ class SpendAddScreen extends Component {
     }
 
     _saveSpend() {
+        let error = this._validate()
+        if (error != ''){
+            alert(error)
+            return false
+        }
+
         //TODO find a better way to transform in int
-        let value = this.props.value.replace(',','').replace(',','').replace(',','') * 100
+        let value = this.props.value.replace(',', '').replace(',', '').replace(',', '') * 100
 
         if (this.props.uid != "") {
             this.props.alterSpend({
@@ -54,6 +60,24 @@ class SpendAddScreen extends Component {
                 this.props.date
             );
         }
+    }
+
+    _validate() {
+        
+        let error = ''
+        if (this.props.date == '' || this.props.date == undefined)
+            error = error.concat('Date is required \n')
+
+        if (this.props.description == '' || this.props.description == undefined)
+            error = error.concat('Description is required \n')
+
+        if (Number(this.props.value) == 0 || this.props.value == undefined)
+            error = error.concat('Value is required \n')
+
+        if (Number(this.props.category) == 0 || this.props.category == undefined)
+            error = error.concat('Category is required \n')
+
+        return error
     }
 
     _deleteSpend() {
