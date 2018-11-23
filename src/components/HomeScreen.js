@@ -5,32 +5,7 @@ import { gastosFetch, preAddSpend } from "../actions/SpendActions";
 import NavigationService from "../../NavigationService";
 import SpendItem from "./SpendItem";
 import ActionButton from "react-native-action-button";
-import Dinero from '../../node_modules/dinero.js/build/esm/dinero'
-
-class MyListItemCategory extends React.PureComponent {
-    render() {
-        return (
-            <TouchableOpacity>
-                <View
-                    style={{
-                        backgroundColor: "white",
-                        width: 70,
-                        height: 70,
-                        margin: 3,
-                        padding: 4
-                    }}
-                >
-                    <View style={{ flex: 1 }}>
-                        <Text>{this.props.category}</Text>
-                    </View>
-                    <View style={{ flex: 1 }}>
-                        <Text>{Dinero({ amount: this.props.sum }).toFormat()}</Text>
-                    </View>
-                </View>
-            </TouchableOpacity>
-        );
-    }
-}
+import CategoryItem from '../components/CategoryItem'
 
 class HomeScreen extends React.Component {
     static navigationOptions = {
@@ -57,7 +32,7 @@ class HomeScreen extends React.Component {
     }
 
     _renderItemCategory({ item }) {
-        return <MyListItemCategory category={item.category} sum={item.sum} />;
+        return <CategoryItem category={item.category} sum={item.sum} />;
     }
 
     render() {

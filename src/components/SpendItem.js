@@ -15,10 +15,6 @@ class SpendItem extends React.PureComponent {
 
     render() {
 
-        const formatter = new Intl.NumberFormat('en-US', {
-            minimumFractionDigits: 2
-        })
-
         return (
             <TouchableOpacity onPress={() => this._changeSpend({date: this.props.date, category: this.props.category, description: this.props.description, value: this.props.value, uid: this.props.uid })}>
                 <View style={styles.line}>
