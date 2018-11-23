@@ -1,5 +1,5 @@
 import React from "react";
-import { View, FlatList, Text, TouchableOpacity } from "react-native";
+import { View, FlatList, Text, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { gastosFetch, preAddSpend } from "../actions/SpendActions";
 import NavigationService from "../../NavigationService";
@@ -36,9 +36,15 @@ class HomeScreen extends React.Component {
     }
 
     render() {
+        let noSpendMessage = undefined
+        if (this.props.spends.length == 0) {
+            noSpendMessage = <View style={styles.noSpendMessage} ><Text>You don't have any spends</Text></View>
+        }
+
         return (
             <View style={{ flex: 1 }}>
-                <View style={{flex: 1, paddingTop: 10 }} >
+                <View style={{ flex: 1, paddingTop: 10 }} >
+                    {noSpendMessage}
                     <FlatList
                         data={this.props.categories}
                         renderItem={this._renderItemCategory}
@@ -53,7 +59,6 @@ class HomeScreen extends React.Component {
                         keyExtractor={item => item.uid}
                     />
                 </View>
-
                 <ActionButton
                     buttonColor="#b2dbbf"
                     offsetX={30}
@@ -67,6 +72,13 @@ class HomeScreen extends React.Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    noSpendMessage: {
+        paddingTop: 30,
+        alignItems: 'center'
+    }
+})
 
 mapStateToProps = state => ({
     spends: state.SpendListReducer.spends,
