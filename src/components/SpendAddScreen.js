@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { FormLabel, FormInput, Button } from "react-native-elements";
 import { connect } from "react-redux";
 import {
@@ -81,7 +81,17 @@ class SpendAddScreen extends Component {
     }
 
     _deleteSpend() {
-        this.props.deleteSpend(this.props.uid);
+        Alert.alert(
+            '',
+            'Delete spend?',
+            [
+              {text: 'Cancel', onPress: () => false, style: 'cancel'},
+              {text: 'Delete', onPress: () =>  this.props.deleteSpend(this.props.uid)},
+            ],
+            { cancelable: false }
+          )
+
+        
     }
 
     render() {
