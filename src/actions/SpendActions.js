@@ -118,6 +118,7 @@ const addSpendSuccess = dispatch => {
     dispatch({
         type: ADD_SPEND_SUCCESS
     });
+    NavigationService.navigate('Home')
 };
 
 const addSpendError = dispatch => {
