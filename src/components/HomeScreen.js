@@ -24,7 +24,7 @@ class MyListItemCategory extends React.PureComponent {
                         <Text>{this.props.category}</Text>
                     </View>
                     <View style={{ flex: 1 }}>
-                        <Text>{Dinero({amount: this.props.sum}).toFormat()}</Text>
+                        <Text>{Dinero({ amount: this.props.sum }).toFormat()}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -62,19 +62,22 @@ class HomeScreen extends React.Component {
 
     render() {
         return (
-            <View style={{flex: 1}}>
-                <FlatList
-                    data={this.props.categories}
-                    renderItem={this._renderItemCategory}
-                    contentContainerStyle={{ flexDirection: "row" }}
-                    keyExtractor={item => item.category}
-                />
-
-                <FlatList
-                    renderItem={this._renderItem}
-                    data={this.props.spends}
-                    keyExtractor={item => item.uid}
-                />
+            <View style={{ flex: 1 }}>
+                <View style={{flex: 1, paddingTop: 10 }} >
+                    <FlatList
+                        data={this.props.categories}
+                        renderItem={this._renderItemCategory}
+                        contentContainerStyle={{ flexDirection: "row" }}
+                        keyExtractor={item => item.category}
+                    />
+                </View>
+                <View style={{ flex: 8 }}>
+                    <FlatList
+                        renderItem={this._renderItem}
+                        data={this.props.spends}
+                        keyExtractor={item => item.uid}
+                    />
+                </View>
 
                 <ActionButton
                     buttonColor="#b2dbbf"
