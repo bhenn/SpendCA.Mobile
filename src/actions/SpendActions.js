@@ -12,6 +12,7 @@ import {
     CHANGE_SPEND,
     REMOVE_SPEND_ERROR,
     REMOVE_SPEND_SUCCESS,
+    FILTER_SPENDS,
 } from "../actions/types";
 import b64 from "base-64";
 import firebase from "firebase";
@@ -50,6 +51,14 @@ export const preAddSpend = () => {
         type: PRE_ADD_SPEND
     }
 }
+
+export const filterSpends = text => {
+    return {
+        type: FILTER_SPENDS,
+        payload: text
+    };
+};
+
 
 export const addSpend = (description, value, category, date) => {
 
@@ -154,7 +163,7 @@ const removeSpendError = dispatch => {
 };
 
 
-export const gastosFetch = () => {
+export const spendsFetch = () => {
     let email = b64.encode(firebase.auth().currentUser.email);
     return dispatch => {
         firebase

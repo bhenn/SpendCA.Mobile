@@ -24,6 +24,7 @@ export const ALTER_SPEND_ERROR = 'alter_spend_error';
 export const REMOVE_SPEND_SUCCESS = 'remove_spend_success';
 export const REMOVE_SPEND_ERROR = 'remove_spend_error';
 export const LIST_SPENDS = 'list_spends';
+export const FILTER_SPENDS = 'filter_spends';
 export const CHANGE_SPEND = 'change_spend';
 
 //CATEGORY

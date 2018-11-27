@@ -1,16 +1,20 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { changeSpend } from "../actions/SpendActions";
+import { filterSpends } from "../actions/SpendActions";
 import { connect } from "react-redux";
 import Dinero from '../../node_modules/dinero.js/build/esm/dinero'
 
 class CategoryItem extends React.PureComponent {
 
+    _filterSpends(filterText){
+        this.props.filterSpends(filterText)
+    }
+
     render() {
         return (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this._filterSpends(this.props.category)}>
                 <View
-                    style={styles.container}
+                    style={[styles.container , this.props.selected && styles.category_selected]}
                 >
                     <View style={{ flex: 1 }}>
                         <Text>{this.props.category}</Text>
@@ -31,9 +35,12 @@ const styles = StyleSheet.create({
         height: 70,
         margin: 3,
         padding: 4
+    },
+    category_selected: {
+        backgroundColor: '#e2e2e2'
     }
 })
 
 export default connect(
-    null, { changeSpend }
+    null, { filterSpends }
 )(CategoryItem);
