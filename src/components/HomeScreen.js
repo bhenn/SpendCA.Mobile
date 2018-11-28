@@ -1,151 +1,92 @@
 import React from "react";
-import { View, FlatList, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { ListItem, Header, Icon } from "react-native-elements";
+import { View, FlatList, Text, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { gastosFetch } from "../actions/SpendActions";
+import { spendsFetch, preAddSpend } from "../actions/SpendActions";
 import NavigationService from "../../NavigationService";
-import moment from 'moment'
-
-
-class MyListItem extends React.PureComponent {
-    render() {
-        return (
-            <TouchableOpacity onPress={this._onPress}>
-                <View style={styles.line}>
-                    <View style={{flex: 0.5}}>
-                        <Text style={styles.month}>{moment(this.props.date).format('MMM')}</Text>
-                        <Text style={styles.day}>{moment(this.props.date).format('DD')}</Text>
-                    </View>
-                    <View style={{flex: 3}}>
-                        <Text style={styles.category}>{this.props.category}</Text>
-                        <Text style={styles.description}>{this.props.title}</Text>
-                    </View>
-                    <View style={{flex: 1}}>
-                        <Text style={styles.amount}>{this.props.value}</Text>
-                    </View>
-                </View>
-            </TouchableOpacity>
-        );
-    }
-}
-
-class MyListItemCategory extends React.PureComponent {
-    render() {
-        return (
-            <TouchableOpacity>
-                <View style={{backgroundColor: 'white', width: 70, height: 70,  margin: 3, padding: 4}}>
-                    <View style={{flex: 1}}>
-                        <Text>{this.props.category}</Text>
-                    </View>
-                    <View style={{flex: 1}}>
-                        <Text>{this.props.sum}</Text>
-                    </View>
-                </View>
-            </TouchableOpacity>
-        );
-    }
-}
+import SpendItem from "./SpendItem";
+import ActionButton from "react-native-action-button";
+import CategoryItem from '../components/CategoryItem'
 
 class HomeScreen extends React.Component {
     static navigationOptions = {
         title: "Overview",
         headerStyle: {
-            backgroundColor: "#b2dbbf"
-        },
-        headerRight: (
-            <View
-                style={{ width: 35, alignContent: "center", marginRight: 20 }}
-            >
-                <TouchableOpacity
-                    onPress={() => NavigationService.navigate("SpendAdd")}
-                >
-                    <Icon name="add" fontSize="20" style={{ marginRight: 5 }} />
-                </TouchableOpacity>
-            </View>
-        )
+            backgroundColor: "#f96872"
+        }
     };
 
     componentWillMount() {
-        this.props.gastosFetch();
+        this.props.spendsFetch();
     }
 
-    _renderItem({ item }) {
-        return (
-            <MyListItem
-                title={item.description}
-                category={item.category}
-                value={item.value}
-                date={item.date}
-            />
-        );
-    }
+    _renderItem = ({ item }) => (
+        <SpendItem
+            description={item.description}
+            category={item.category}
+            value={item.value}
+            date={item.date}
+            uid={item.uid}
+        />
+    )
 
-    _renderItemCategory({ item }) {
-        return (
-            <MyListItemCategory
-                category={item.category}
-                sum={item.sum}
-            />
-        );
-    }
+
+    _renderItemCategory = ({ item }) => (
+        <CategoryItem category={item.category} sum={item.sum} selected={item.category == this.props.filter_category} />
+    )
 
     render() {
+        let noSpendMessage = undefined
+        if (this.props.spends_filtered.length == 0) {
+            noSpendMessage = <View style={styles.noSpendMessage} ><Text>You don't have any spends</Text></View>
+        }
+
         return (
-            <View>
-                <View>
+            <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, paddingTop: 10 }} >
+                    {noSpendMessage}
                     <FlatList
                         data={this.props.categories}
+                        extraData={this.props}
                         renderItem={this._renderItemCategory}
-                        contentContainerStyle={{flexDirection: 'row'}}
+                        contentContainerStyle={{ flexDirection: "row" }}
                         keyExtractor={item => item.category}
                     />
                 </View>
-                <View>
+                <View style={{ flex: 8 }}>
                     <FlatList
                         renderItem={this._renderItem}
-                        data={this.props.spends}
+                        data={this.props.spends_filtered}
                         keyExtractor={item => item.uid}
                     />
                 </View>
+                <ActionButton
+                    buttonColor="#f96872"
+                    offsetX={30}
+                    offsetY={30}
+                    onPress={() => {
+                        this.props.preAddSpend();
+                        NavigationService.navigate("SpendAdd");
+                    }}
+                />
             </View>
         );
     }
 }
 
-mapStateToProps = state => ({
-    spends: state.SpendListReducer.spends,
-    categories: state.SpendListReducer.categories,
-});
-
 const styles = StyleSheet.create({
-    line: {
-        padding: 8,
-        margin: 1,
-        flexDirection: 'row',
-        flex: 1,
-        backgroundColor: 'white'
-    },
-    category: {
-        fontSize: 18,
-    },
-    description: {
-        color: '#999',
-    },
-    amount: {
-        fontSize: 16,
-        textAlign: 'right'
-    },
-    month: {
-        color: '#999',
-        textAlign: 'center',
-    },
-    day: {
-        color: '#999',
-        textAlign: 'center',
+    noSpendMessage: {
+        paddingTop: 30,
+        alignItems: 'center'
     }
 })
 
+mapStateToProps = state => ({
+    filter_category: state.SpendListReducer.filter_category,
+    spends_filtered: state.SpendListReducer.spends_filtered,
+    categories: state.SpendListReducer.categories,
+});
+
 export default connect(
     mapStateToProps,
-    { gastosFetch }
+    { spendsFetch, preAddSpend }
 )(HomeScreen);

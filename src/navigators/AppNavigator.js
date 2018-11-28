@@ -38,9 +38,9 @@ const TabNavigator = createBottomTabNavigator({
             const { routeName } = navigation.state;
             let iconName;
             if (routeName === 'Home') {
-                iconName = `ios-basket${focused ? '' : '-outline'}`;
+                iconName = 'ios-basket';
             } else if (routeName === 'Settings') {
-                iconName = `ios-options${focused ? '' : '-outline'}`;
+                iconName = 'ios-options';
             }
 
             return <Ionicons name={iconName} size={25} color={tintColor} />;
@@ -48,7 +48,7 @@ const TabNavigator = createBottomTabNavigator({
         
     }),
     tabBarOptions: {
-        activeTintColor: '#92b59d',
+        activeTintColor: '#f96872',
         inactiveTintColor: 'gray',
     },
 })

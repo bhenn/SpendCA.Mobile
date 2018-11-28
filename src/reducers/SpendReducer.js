@@ -1,38 +1,61 @@
-import { CHANGE_DESCRIPTION , CHANGE_CATEGORY, CHANGE_VALUE , ADD_SPEND, ADD_SPEND_SUCCESS, CHANGE_DATE } from "../actions/types";
-
+import {
+    CHANGE_DESCRIPTION,
+    CHANGE_CATEGORY,
+    CHANGE_VALUE,
+    PRE_ADD_SPEND,
+    ADD_SPEND_SUCCESS,
+    ADD_SPEND_ERROR,
+    ALTER_SPEND_ERROR,
+    ALTER_SPEND_SUCCESS,
+    CHANGE_DATE,
+    CHANGE_SPEND
+} from "../actions/types";
 
 const INITIAL_STATE = {
-    description: '',
-    value: '',
-    category: '',
-    date: '',
-}
+    uid: "",
+    description: "",
+    value: "",
+    category: "",
+    date: ""
+};
 
 export default (state = INITIAL_STATE, action) => {
-    
     switch (action.type) {
         case CHANGE_DESCRIPTION:
-        return {...state, description: action.payload}    
+            return { ...state, description: action.payload };
 
         case CHANGE_VALUE:
-        return {...state, value: action.payload}    
+            return { ...state, value: action.payload };
 
         case CHANGE_CATEGORY:
-        return {...state, category: action.payload}    
+            return { ...state, category: action.payload };
 
         case CHANGE_DATE:
-        return {...state, date: action.payload}    
-        
-        case ADD_SPEND:
-        return state
+            return { ...state, date: action.payload };
+
+        case CHANGE_SPEND:
+            return {
+                ...state,
+                ...action.payload,
+                value: action.payload.value.toString()
+            };
+
+        case PRE_ADD_SPEND:
+            return {...state, category: '', value: '0', description: '', uid: '', date: new Date()};
 
         case ADD_SPEND_SUCCESS:
-        return {...state, category: '', value:'' , description: '' }
+            return { ...state, category: "", value: "", description: "" };
 
-        default: 
-        return state    
+        case ADD_SPEND_ERROR:
+            return state;
 
+        case ALTER_SPEND_SUCCESS:
+            return { ...state, category: "", value: "", description: "", uid: "" };
+
+        case ALTER_SPEND_ERROR:
+            return state;
+
+        default:
+            return state;
     }
-    
-    
-}
+};

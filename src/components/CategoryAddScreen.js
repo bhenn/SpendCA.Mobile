@@ -8,7 +8,7 @@ class CategoryAddScreen extends Component {
     static navigationOptions = {
         headerTintColor: "black",
         headerStyle: {
-            backgroundColor: "#b2dbbf"
+            backgroundColor: "#f96872"
         }
     };
 

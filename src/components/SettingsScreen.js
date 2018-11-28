@@ -18,7 +18,7 @@ class SettingsScreen extends React.Component {
     static navigationOptions = {
         title: "SETTINGS",
         headerStyle: {
-            backgroundColor: "#b2dbbf"
+            backgroundColor: "#f96872"
         },
         headerRight: (
             <View
@@ -48,7 +48,7 @@ class SettingsScreen extends React.Component {
                 <View>
                     <List>
                         {list.map(item => (
-                            <TouchableOpacity onPress={() => this._itemClick(item.key)}>
+                            <TouchableOpacity key={item.key} onPress={() => this._itemClick(item.key)}>
                                 <ListItem
                                     key={item.key}
                                     title={item.title}
