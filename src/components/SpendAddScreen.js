@@ -42,7 +42,10 @@ class SpendAddScreen extends Component {
         }
 
         //TODO find a better way to transform in int
-        let value = this.props.value.replace(',', '').replace(',', '').replace(',', '') * 100
+        let value = this.props.value
+        if (this.props.value.includes('.')){
+            value = this.props.value.replace(',', '').replace(',', '').replace(',', '') * 100
+        }
 
         if (this.props.uid != "") {
             this.props.alterSpend({
@@ -109,6 +112,7 @@ class SpendAddScreen extends Component {
         return (
             <View>
                 <TextInputMask
+                    ref={ref => (this._valueInput = ref)}
                     style={styles.input}
                     value={this.props.value}
                     onChangeText={text => this.props.changeValue(text)}
