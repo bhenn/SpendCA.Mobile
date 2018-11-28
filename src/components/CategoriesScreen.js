@@ -11,7 +11,7 @@ class CategoriesScreen extends React.Component {
         headerTintColor: "black",
         title: "CATEGORIES",
         headerStyle: {
-            backgroundColor: "#b2dbbf"
+            backgroundColor: "#f96872"
         },
         headerRight: (
             <View
@@ -37,7 +37,7 @@ class CategoriesScreen extends React.Component {
                     ))}
                 </List>
                 <ActionButton
-                    buttonColor="#b2dbbf"
+                    buttonColor="#f96872"
                     offsetX={30}
                     offsetY={30}
                     onPress={() => {

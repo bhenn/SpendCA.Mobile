@@ -11,7 +11,7 @@ class HomeScreen extends React.Component {
     static navigationOptions = {
         title: "Overview",
         headerStyle: {
-            backgroundColor: "#b2dbbf"
+            backgroundColor: "#f96872"
         }
     };
 
@@ -60,7 +60,7 @@ class HomeScreen extends React.Component {
                     />
                 </View>
                 <ActionButton
-                    buttonColor="#b2dbbf"
+                    buttonColor="#f96872"
                     offsetX={30}
                     offsetY={30}
                     onPress={() => {
