@@ -1,6 +1,6 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
-import { ListItem, List, Button, Text } from "react-native-elements";
+import { ListItem, Button } from "react-native-elements";
 import { connect } from "react-redux";
 import { categoryFetch } from "../actions/CategoryActions";
 import NavigationService from "../../NavigationService";
@@ -45,18 +45,16 @@ class SettingsScreen extends React.Component {
     render() {
         return (
             <View style={styles.contentView}>
-                <View>
-                    <List>
-                        {list.map(item => (
-                            <TouchableOpacity key={item.key} onPress={() => this._itemClick(item.key)}>
-                                <ListItem
-                                    key={item.key}
-                                    title={item.title}
-                                    leftIcon={{ name: item.icon }}
-                                />
-                            </TouchableOpacity>
-                        ))}
-                    </List>
+                <View style={styles.listView}>
+                    {list.map(item => (
+                        <TouchableOpacity key={item.key} onPress={() => this._itemClick(item.key)}>
+                            <ListItem
+                                key={item.key}
+                                title={item.title}
+                                leftIcon={{ name: item.icon }}
+                            />
+                        </TouchableOpacity>
+                    ))}
                 </View>
                 <View style={styles.logoutView} >
                     <Button onPress={() => this._logout()} title="Logout" />
@@ -71,7 +69,9 @@ mapStateToProps = state => ({
 });
 
 const styles = StyleSheet.create({
-
+    listView:{
+        paddingTop: 20
+    },
     contentView: {
         flex: 1,
         flexDirection: 'column',
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     },
     logoutView: {
         marginBottom: 50,
+        padding: 20
     }
 
 

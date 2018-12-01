@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, StyleSheet, ImageBackground } from "react-native";
-import { FormInput, FormLabel, Button, Text } from "react-native-elements";
+import { Input, Label, Button, Text } from "react-native-elements";
 import { changeEmail, changePassword, doLogin } from "../actions/UserActions";
 
 class loginScreen extends Component {
@@ -16,9 +16,6 @@ class loginScreen extends Component {
             //         style={{ width: "100%", height: "100%" }}
             // >
             <View style={styles.container}>
-                
-                    
-                
                 <View style={styles.loginView}>
                     <View style={styles.loginTitle}>
                         <View>
@@ -29,17 +26,17 @@ class loginScreen extends Component {
                         </View>
                     </View>
                     <View style={styles.loginInput}>
-                        <FormLabel>E-mail</FormLabel>
-                        <FormInput
+                        <Input
                             value={this.props.email}
                             onChangeText={text => this.props.changeEmail(text)}
                             autoFocus={false}
                             autoCapitalize="none"
                             autoCorrect={false}
                             keyboardType="email-address"
+                            leftIcon={{ type: 'feather', name: 'mail' }}
+                            placeholder={'E-mail'}
                         />
-                        <FormLabel>Password</FormLabel>
-                        <FormInput
+                        <Input
                             value={this.props.password}
                             onChangeText={text =>
                                 this.props.changePassword(text)
@@ -47,17 +44,19 @@ class loginScreen extends Component {
                             secureTextEntry={true}
                             autoCapitalize="none"
                             autoCorrect={false}
+                            placeholder={'Password'}
+                            leftIcon={{ type: 'feather', name: 'lock' }}
                         />
                     </View>
                     <Button
+                        title="LOG IN"
                         onPress={() =>
                             this.props.doLogin(
                                 this.props.email,
                                 this.props.password
                             )
                         }
-                        title="LOG IN"
-                        underlayColor="transparent"
+                        loadingProps={{ size: "large", color: "#f96872" }}
                         buttonStyle={{ marginTop: 20 }}
                         loading={this.props.loadingLogin}
                         disabled={this.props.loadingLogin}

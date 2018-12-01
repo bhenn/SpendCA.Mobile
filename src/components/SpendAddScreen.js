@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, StyleSheet, Alert } from "react-native";
-import { FormLabel, FormInput, Button } from "react-native-elements";
+import { Input, Button } from "react-native-elements";
 import { connect } from "react-redux";
 import {
     changeDescription,
@@ -110,10 +110,10 @@ class SpendAddScreen extends Component {
         }
 
         return (
-            <View>
+            <View style={styles.container}>
                 <TextInputMask
                     ref={ref => (this._valueInput = ref)}
-                    style={styles.input}
+                    style={styles.inputValue}
                     value={this.props.value}
                     onChangeText={text => this.props.changeValue(text)}
                     type="money"
@@ -123,8 +123,8 @@ class SpendAddScreen extends Component {
                 <TouchableOpacity
                     onPress={() => this.setState({ datePickerVisible: true })}
                 >
-                    <FormLabel>Date</FormLabel>
-                    <FormInput
+                    <Input
+                        label={'Date'}
                         value={moment(new Date(this.props.date)).format("LL")}
                         editable={false}
                         pointerEvents="none"
@@ -138,14 +138,14 @@ class SpendAddScreen extends Component {
                     }}
                     onCancel={() => this.setState({ datePickerVisible: false })}
                 />
-                <FormLabel>Description</FormLabel>
-                <FormInput
+                <Input
+                    label={'Description'}
                     value={this.props.description}
                     onChangeText={text => this.props.changeDescription(text)}
                 />
                 <TouchableOpacity onPress={() => this.refs.picker.show()}>
-                    <FormLabel>Category</FormLabel>
-                    <FormInput
+                    <Input
+                        label={'Category'}
                         value={this.props.category}
                         editable={false}
                         pointerEvents="none"
@@ -194,7 +194,10 @@ export default connect(
 )(SpendAddScreen);
 
 const styles = StyleSheet.create({
-    input: {
+    container: {
+        padding: 20,
+    },
+    inputValue: {
         marginTop: 50,
         marginBottom: 50,
         height: 40,

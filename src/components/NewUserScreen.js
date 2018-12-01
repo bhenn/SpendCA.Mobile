@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, StyleSheet } from "react-native";
-import { FormLabel, FormInput, Button, Text } from "react-native-elements";
+import { Input, Button, Text } from "react-native-elements";
 import {
     changeEmail,
     changePassword,
@@ -20,22 +20,22 @@ class newUserScreen extends Component {
 
     render() {
         return (
-            <View>
-                <FormLabel>Name</FormLabel>
-                <FormInput
+            <View style={styles.container}>
+                <Input
+                    label={'Name'}
                     value={this.props.name}
                     onChangeText={text => this.props.changeName(text)}
                 />
-                <FormLabel>E-mail</FormLabel>
-                <FormInput
+                <Input
+                    label={'E-mail'}
                     value={this.props.email}
                     onChangeText={text => this.props.changeEmail(text)}
                     autoCapitalize="none"
                     autoCorrect={false}
                     keyboardType="email-address"
                 />
-                <FormLabel>Password</FormLabel>
-                <FormInput
+                <Input
+                    label={'Password'}
                     value={this.props.password}
                     onChangeText={text => this.props.changePassword(text)}
                     secureTextEntry={true}
@@ -67,6 +67,9 @@ const mapStateToProps = state => ({
 });
 
 const styles = StyleSheet.create({
+    container: {
+        padding: 20,
+    },
     regiserErrorMessage: {
         marginTop: 20,
         fontSize: 16,
