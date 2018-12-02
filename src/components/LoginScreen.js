@@ -1,28 +1,28 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, StyleSheet, ImageBackground } from "react-native";
-import { Input, Label, Button, Text } from "react-native-elements";
+import { View, StyleSheet } from "react-native";
+import { Input, Button, Text, Icon } from "react-native-elements";
 import { changeEmail, changePassword, doLogin } from "../actions/UserActions";
+import LinearGradient from "react-native-linear-gradient";
 
 class loginScreen extends Component {
     static navigationOptions = {
-        headerMode: "none"
+        header: null
     };
 
     render() {
         return (
-            // <ImageBackground
-            // source={require("./../../background.jpg")}
-            //         style={{ width: "100%", height: "100%" }}
-            // >
-            <View style={styles.container}>
-                <View style={styles.loginView}>
-                    <View style={styles.loginTitle}>
+            <LinearGradient
+                colors={['#FF8126', '#910947']}
+                style={styles.container}
+            >
+                <View>
+                    <View style={styles.logo}>
                         <View>
-                            <Text style={{ fontSize: 30 }}>Spend</Text>
+                            <Text style={{ color: "white", fontSize: 30 }}>Spend</Text>
                         </View>
                         <View>
-                            <Text style={{ fontSize: 40 }}>CA</Text>
+                            <Text style={{ color: "white", fontSize: 40 }}>CA</Text>
                         </View>
                     </View>
                     <View style={styles.loginInput}>
@@ -33,8 +33,17 @@ class loginScreen extends Component {
                             autoCapitalize="none"
                             autoCorrect={false}
                             keyboardType="email-address"
-                            leftIcon={{ type: 'feather', name: 'mail' }}
+                            leftIcon={
+                                <Icon
+                                    type='feather'
+                                    name='mail'
+                                    color='white'
+                                />
+                            }
                             placeholder={'E-mail'}
+                            style={{ color: 'white' }}
+                            color={'white'}
+                            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
                         />
                         <Input
                             value={this.props.password}
@@ -45,39 +54,46 @@ class loginScreen extends Component {
                             autoCapitalize="none"
                             autoCorrect={false}
                             placeholder={'Password'}
-                            leftIcon={{ type: 'feather', name: 'lock' }}
+                            leftIcon={
+                                <Icon
+                                    type='feather'
+                                    name='lock'
+                                    color='white'
+                                />
+                            }
+                            style={{ color: 'white' }}
+                            color={'white'}
+                            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
                         />
+                        <Text style={styles.loginErrorMessage}>
+                            {this.props.loginError}
+                        </Text>
+                        <Button
+                            title="LOG IN"
+                            onPress={() =>
+                                this.props.doLogin(
+                                    this.props.email,
+                                    this.props.password
+                                )
+                            }
+                            loadingProps={{ size: "large", color: "#f96872" }}
+                            loading={this.props.loadingLogin}
+                            disabled={this.props.loadingLogin}
+                            buttonStyle={{ marginTop: 50, marginBottom: 20, backgroundColor: '#FF473A' }}
+                        />
+
+                        <Text style={{ color: "white" }}>New here ?</Text>
+                        <Text
+                            style={{ color: "white" }}
+                            onPress={() =>
+                                this.props.navigation.navigate("NewAccount")
+                            }
+                        >
+                            Create an account
+                    </Text>
                     </View>
-                    <Button
-                        title="LOG IN"
-                        onPress={() =>
-                            this.props.doLogin(
-                                this.props.email,
-                                this.props.password
-                            )
-                        }
-                        loadingProps={{ size: "large", color: "#f96872" }}
-                        buttonStyle={{ marginTop: 20 }}
-                        loading={this.props.loadingLogin}
-                        disabled={this.props.loadingLogin}
-                    />
-                    <Text style={styles.loginErrorMessage}>
-                        {this.props.loginError}
-                    </Text>
                 </View>
-                <View style={styles.newAccount}>
-                    <Text style={{ color: "grey" }}>New here ?</Text>
-                    <Text
-                        style={{ color: "grey" }}
-                        onPress={() =>
-                            this.props.navigation.navigate("NewAccount")
-                        }
-                    >
-                        Create an account
-                    </Text>
-                </View>
-            </View>
-            // </ImageBackground>
+            </LinearGradient>
         );
     }
 }
@@ -93,23 +109,24 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        paddingTop: 50
+        paddingTop: 50,
     },
-    loginView: {},
-    loginTitle: {},
+    logo: {
+        flex: 1
+    },
     loginInput: {
+        flex: 2,
         marginTop: 150,
         width: 300,
         height: 150
     },
     loginErrorMessage: {
-        marginTop: 20,
+        marginTop: 10,
         fontSize: 16,
         width: 300,
         alignItems: "center"
     },
     newAccount: {
-        marginTop: 20,
         flex: 0.5,
         justifyContent: "center",
         alignItems: "center"
