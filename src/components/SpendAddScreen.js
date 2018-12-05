@@ -208,6 +208,6 @@ const styles = StyleSheet.create({
         fontSize: 36,
         borderWidth: 0.5,
         borderColor: 'white',
-        color: '#909ca6',
+        color: '#FF473A',
     }
 });

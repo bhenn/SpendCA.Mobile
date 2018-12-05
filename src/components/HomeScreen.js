@@ -42,14 +42,15 @@ class HomeScreen extends React.Component {
 
         return (
             <View style={{ flex: 1 }}>
-                <View style={{ flex: 1, paddingTop: 10 }} >
+                <View style={{ flex: 1, padding: 10 }} >
                     {noSpendMessage}
                     <FlatList
                         data={this.props.categories}
                         extraData={this.props}
-                        renderItem={this._renderItemCategory}
-                        contentContainerStyle={{ flexDirection: "row" }}
+                        renderItem={this._renderItemCategory}   
                         keyExtractor={item => item.category}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
                     />
                 </View>
                 <View style={{ flex: 8 }}>
