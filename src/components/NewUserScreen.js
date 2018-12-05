@@ -43,7 +43,8 @@ class newUserScreen extends Component {
                     autoCorrect={false}
                 />
                 <Button
-                    style={{ paddingTop: 20 }}
+                    style={{ marginTop: 20 }}
+                    buttonStyle={{ backgroundColor: '#FF473A' }}
                     title="Register"
                     onPress={() => this._registerUser()}
                     loading={this.props.loading}

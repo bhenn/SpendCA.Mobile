@@ -103,6 +103,7 @@ class SpendAddScreen extends Component {
             deleteButton = (
                 <Button
                     style={{ marginTop: 15 }}
+                    buttonStyle={{ backgroundColor: '#FF473A' }}
                     onPress={() => this._deleteSpend()}
                     title="Delete"
                 />
@@ -161,6 +162,7 @@ class SpendAddScreen extends Component {
                 />
                 <Button
                     style={{ marginTop: 15 }}
+                    buttonStyle={{ backgroundColor: '#FF473A' }}
                     onPress={() => this._saveSpend()}
                     title="Save"
                 />

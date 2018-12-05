@@ -57,7 +57,10 @@ class SettingsScreen extends React.Component {
                     ))}
                 </View>
                 <View style={styles.logoutView} >
-                    <Button onPress={() => this._logout()} title="Logout" />
+                    <Button
+                        onPress={() => this._logout()} title="Logout"
+                        buttonStyle={{ backgroundColor: '#FF473A' }}
+                    />
                 </View>
             </View>
         );
@@ -69,7 +72,7 @@ mapStateToProps = state => ({
 });
 
 const styles = StyleSheet.create({
-    listView:{
+    listView: {
         paddingTop: 20
     },
     contentView: {

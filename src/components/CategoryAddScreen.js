@@ -26,6 +26,7 @@ class CategoryAddScreen extends Component {
                 />
                 <Button 
                 style={{marginTop:10}}
+                buttonStyle={{ backgroundColor: '#FF473A' }}
                 onPress={() => this._addCategory()} title="Save" /> */}
             </View>
         );
