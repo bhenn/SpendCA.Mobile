@@ -41,10 +41,11 @@ class SpendAddScreen extends Component {
             return false
         }
 
-        //TODO find a better way to transform in int
         let value = this.props.value
         if (this.props.value.includes('.')){
-            value = this.props.value.replace(',', '').replace(',', '').replace(',', '') * 100
+            value = Math.round(100 * parseFloat(this.props.value.replace(/[$,]/g,'')))
+        }else{
+            value = parseFloat(this.props.value)
         }
 
         if (this.props.uid != "") {
