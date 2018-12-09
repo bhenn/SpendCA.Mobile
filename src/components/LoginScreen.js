@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, StyleSheet } from "react-native";
-import { Input, Button, Text, Icon } from "react-native-elements";
+import { Button, Text} from "react-native-elements";
 import { changeEmail, changePassword, doLogin } from "../actions/UserActions";
 import LinearGradient from "react-native-linear-gradient";
+import InputWhite from './InputWhite'
 
 class loginScreen extends Component {
     static navigationOptions = {
@@ -26,65 +27,46 @@ class loginScreen extends Component {
                         </View>
                     </View>
                     <View style={styles.loginInput}>
-                        <Input
+                        <InputWhite
                             value={this.props.email}
                             onChangeText={text => this.props.changeEmail(text)}
                             autoFocus={false}
                             autoCapitalize="none"
                             autoCorrect={false}
                             keyboardType="email-address"
-                            leftIcon={
-                                <Icon
-                                    type='feather'
-                                    name='mail'
-                                    color='white'
-                                />
-                            }
                             placeholder={'E-mail'}
-                            style={{ color: 'white' }}
-                            color={'white'}
-                            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                            iconName={'mail'}
                         />
-                        <Input
+                        <InputWhite
                             value={this.props.password}
-                            onChangeText={text =>
-                                this.props.changePassword(text)
-                            }
+                            onChangeText={text => this.props.changePassword(text)}
                             secureTextEntry={true}
                             autoCapitalize="none"
                             autoCorrect={false}
                             placeholder={'Password'}
-                            leftIcon={
-                                <Icon
-                                    type='feather'
-                                    name='lock'
-                                    color='white'
-                                />
-                            }
-                            style={{ color: 'white' }}
-                            color={'white'}
-                            placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+                            iconName='lock'
                         />
                         <Text style={styles.loginErrorMessage}>
                             {this.props.loginError}
                         </Text>
                         <Button
-                            title="LOG IN"
+                            title="Log in"
                             onPress={() =>
                                 this.props.doLogin(
                                     this.props.email,
                                     this.props.password
                                 )
                             }
-                            loadingProps={{ size: "large", color: "#f96872" }}
-                            loading={this.props.loadingLogin}
+                            buttonStyle={{ marginTop: 50, marginBottom: 20, backgroundColor: '#FF473A', height: 40, width: 300 }}
+                            loadingProps={{ size: "small", color: "white" }}
                             disabled={this.props.loadingLogin}
-                            buttonStyle={{ marginTop: 50, marginBottom: 20, backgroundColor: '#FF473A' }}
+                            disabledStyle={{ backgroundColor: '#BC2E24' }}
+                            loading={this.props.loadingLogin}
                         />
 
-                        <Text style={{ color: "white" }}>New here ?</Text>
+                        <Text style={{ color: "rgba(255, 255, 255, 0.7)" }}>New here ?</Text>
                         <Text
-                            style={{ color: "white" }}
+                            style={{ color: "white", fontWeight: 'bold' }}
                             onPress={() =>
                                 this.props.navigation.navigate("NewAccount")
                             }
@@ -118,7 +100,8 @@ const styles = StyleSheet.create({
         flex: 2,
         marginTop: 150,
         width: 300,
-        height: 150
+        height: 150,
+        alignItems: 'center'
     },
     loginErrorMessage: {
         marginTop: 10,
@@ -126,11 +109,7 @@ const styles = StyleSheet.create({
         width: 300,
         alignItems: "center"
     },
-    newAccount: {
-        flex: 0.5,
-        justifyContent: "center",
-        alignItems: "center"
-    }
+
 });
 
 export default connect(
