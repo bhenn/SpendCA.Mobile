@@ -104,7 +104,7 @@ class SpendAddScreen extends Component {
             deleteButton = (
                 <Button
                     style={{ marginTop: 15 }}
-                    buttonStyle={{ backgroundColor: '#FF473A' }}
+                    buttonStyle={{ backgroundColor: '#E63946' }}
                     onPress={() => this._deleteSpend()}
                     title="Delete"
                 />
@@ -163,7 +163,7 @@ class SpendAddScreen extends Component {
                 />
                 <Button
                     style={{ marginTop: 15 }}
-                    buttonStyle={{ backgroundColor: '#FF473A' }}
+                    buttonStyle={{ backgroundColor: '#E63946' }}
                     onPress={() => this._saveSpend()}
                     title="Save"
                 />
@@ -209,6 +209,6 @@ const styles = StyleSheet.create({
         fontSize: 36,
         borderWidth: 0.5,
         borderColor: 'white',
-        color: '#FF473A',
+        color: '#E63946',
     }
 });

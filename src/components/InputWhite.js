@@ -19,7 +19,7 @@ class InputWhite extends Component {
                         color='rgba(255, 255, 255, 0.7)'
                     />
                 }
-                inputContainerStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', borderBottomWidth: 0, marginBottom: 2 }}
+                inputContainerStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.3)', borderBottomWidth: 0, marginBottom: 2 }}
                 inputStyle={{ color: 'white' }}
                 placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
             ></Input>

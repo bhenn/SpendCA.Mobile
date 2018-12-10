@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, StyleSheet } from "react-native";
-import { Button, Text} from "react-native-elements";
+import { View, StyleSheet, ImageBackground } from "react-native";
+import { Button, Text } from "react-native-elements";
 import { changeEmail, changePassword, doLogin } from "../actions/UserActions";
 import LinearGradient from "react-native-linear-gradient";
 import InputWhite from './InputWhite'
@@ -12,12 +12,9 @@ class loginScreen extends Component {
     };
 
     render() {
-        return (
-            <LinearGradient
-                colors={['#FF8126', '#910947']}
-                style={styles.container}
-            >
-                <View>
+        return (            
+            <ImageBackground source={require('../../background.jpeg')} style={styles.container}>
+                <View style={styles.overlay}>
                     <View style={styles.logo}>
                         <View>
                             <Text style={{ color: "white", fontSize: 30 }}>Spend</Text>
@@ -50,21 +47,22 @@ class loginScreen extends Component {
                             {this.props.loginError}
                         </Text>
                         <Button
-                            title="Log in"
+                            title="Login"
                             onPress={() =>
                                 this.props.doLogin(
                                     this.props.email,
                                     this.props.password
                                 )
                             }
-                            buttonStyle={{ marginTop: 50, marginBottom: 20, backgroundColor: '#FF473A', height: 40, width: 300 }}
+                            buttonStyle={{ marginBottom: 20, backgroundColor: '#E63946', height: 40, width: 300 }}
+                            style={{marginTop: 120}}
                             loadingProps={{ size: "small", color: "white" }}
                             disabled={this.props.loadingLogin}
                             disabledStyle={{ backgroundColor: '#BC2E24' }}
                             loading={this.props.loadingLogin}
                         />
 
-                        <Text style={{ color: "rgba(255, 255, 255, 0.7)" }}>New here ?</Text>
+                        <Text style={{ color: "rgba(255, 255, 255, 0.8)" }}>New here ?</Text>
                         <Text
                             style={{ color: "white", fontWeight: 'bold' }}
                             onPress={() =>
@@ -75,7 +73,7 @@ class loginScreen extends Component {
                     </Text>
                     </View>
                 </View>
-            </LinearGradient>
+            </ImageBackground>
         );
     }
 }
@@ -90,15 +88,19 @@ const mapStateToProps = state => ({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
+    },
+    overlay: {
+        flex: 1,
         paddingTop: 50,
+        backgroundColor: 'rgba(0,0,0,0.3)',
+        alignItems: "center",
     },
     logo: {
-        flex: 1
+        flex: 2
     },
     loginInput: {
-        flex: 2,
-        marginTop: 150,
+        flex: 2.5,
+        marginTop: 50,
         width: 300,
         height: 150,
         alignItems: 'center'

@@ -59,7 +59,7 @@ class SettingsScreen extends React.Component {
                 <View style={styles.logoutView} >
                     <Button
                         onPress={() => this._logout()} title="Logout"
-                        buttonStyle={{ backgroundColor: '#FF473A' }}
+                        buttonStyle={{ backgroundColor: '#E63946' }}
                     />
                 </View>
             </View>
