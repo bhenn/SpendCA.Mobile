@@ -222,13 +222,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+        backgroundColor: 'white',
     },
     valueContainer: {
         flex: 1,
-        paddingTop: 50,
+        justifyContent: 'center',
     },
     dataContainer: {
-        flex: 1
+        flex: 1,
+        justifyContent: 'center',
     },
     buttonContainer: {
         flex: 1,
@@ -239,7 +241,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 36,
         borderWidth: 0.5,
-        borderColor: 'white',
+        borderColor: 'rgba(204, 204, 204, 0.6)',
         color: '#457B9D',
     }
 });

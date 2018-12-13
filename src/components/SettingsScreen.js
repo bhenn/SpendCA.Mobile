@@ -1,6 +1,6 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
-import { ListItem, Button } from "react-native-elements";
+import { ListItem, Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import { categoryFetch } from "../actions/CategoryActions";
 import NavigationService from "../../NavigationService";
@@ -53,10 +53,18 @@ class SettingsScreen extends React.Component {
                     ))}
                 </View>
                 <View style={styles.logoutView} >
-                    <Button
-                        onPress={() => this._logout()} title="Logout"
-                        buttonStyle={{ backgroundColor: '#E63946' }}
-                    />
+                    <TouchableOpacity key={'logout'} onPress={() => this._logout()}>
+                        <ListItem
+                            key={'logout'}
+                            title={'Logout'}
+                            leftIcon={
+                                <Icon
+                                    type='feather'
+                                    name='power'
+                                />
+                            }
+                        />
+                    </TouchableOpacity>
                 </View>
             </View>
         );
@@ -77,8 +85,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     logoutView: {
-        marginBottom: 50,
-        padding: 20
+        paddingBottom: 40
     }
 
 

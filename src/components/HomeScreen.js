@@ -42,13 +42,13 @@ class HomeScreen extends React.Component {
         }
 
         return (
-            <View style={{ flex: 1 }}>
-                <View style={{ flex: 1, padding: 10 }} >
+            <View style={ styles.container }>
+                <View style={{ flex: 1, padding: 10, borderBottomColor: 'rgba(204, 204, 204, 0.6)', borderBottomWidth: 2 }} >
                     {noSpendMessage}
                     <FlatList
                         data={this.props.categories}
                         extraData={this.props}
-                        renderItem={this._renderItemCategory}   
+                        renderItem={this._renderItemCategory}
                         keyExtractor={item => item.category}
                         horizontal
                         showsHorizontalScrollIndicator={false}
@@ -76,6 +76,10 @@ class HomeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'white',
+    },
     noSpendMessage: {
         paddingTop: 30,
         alignItems: 'center'

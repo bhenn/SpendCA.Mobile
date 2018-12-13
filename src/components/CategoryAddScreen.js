@@ -39,10 +39,6 @@ class CategoryAddScreen extends Component {
                     value={this.props.description}
                     onChangeText={text => this.props.changeDescription(text)}
                 />
-                {/* <Button 
-                style={{marginTop:10}}
-                buttonStyle={{ backgroundColor: '#E63946' }}
-                onPress={() => this._addCategory()} title="Save" /> */} */}
             </View>
         );
     }
@@ -50,7 +46,10 @@ class CategoryAddScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20
+        flex: 1,
+        padding: 20,
+        backgroundColor: 'white',
+        
     }
 })
 

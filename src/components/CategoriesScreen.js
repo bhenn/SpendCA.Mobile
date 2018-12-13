@@ -33,6 +33,7 @@ class CategoriesScreen extends React.Component {
                         key={item.description}
                         title={item.description}
                         hideChevron={true}
+                        containerStyle={{borderBottomColor: 'rgba(204, 204, 204, 0.6)', borderBottomWidth: 0.5}}
                     />
                 ))}
 
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         paddingTop: 20,
+        backgroundColor: 'white',
     }
 })
 
