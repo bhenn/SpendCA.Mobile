@@ -10,6 +10,7 @@ import CategoryItem from '../components/CategoryItem'
 class HomeScreen extends React.Component {
     static navigationOptions = {
         title: "Overview",
+        headerTintColor: "white",
         headerStyle: {
             backgroundColor: "#457B9D"
         }

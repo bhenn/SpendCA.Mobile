@@ -1,18 +1,33 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
-import { Input, Button } from "react-native-elements";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { Input, Text } from "react-native-elements";
 import { connect } from "react-redux";
 import { changeDescription, addCategory } from "../actions/CategoryActions";
 
 class CategoryAddScreen extends Component {
-    static navigationOptions = {
-        headerTintColor: "black",
-        headerStyle: {
-            backgroundColor: "#f96872"
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerTintColor: "white",
+            headerStyle: {
+                backgroundColor: "#457B9D"
+            },
+            headerRight: (
+                <TouchableOpacity
+                    onPress={navigation.getParam('save')}
+                    style={{ alignItems: 'center', justifyContent: 'center', padding: 5, paddingRight: 15 }}
+                >
+                    <Text style={{ color: 'white', fontSize: 18 }} >Save</Text>
+                </TouchableOpacity>
+            ),
         }
+
     };
 
-    _addCategory() {
+    componentDidMount() {
+        this.props.navigation.setParams({ save: this._addCategory })
+    }
+
+    _addCategory = () => {
         this.props.addCategory(this.props.description);
     }
 
@@ -24,10 +39,10 @@ class CategoryAddScreen extends Component {
                     value={this.props.description}
                     onChangeText={text => this.props.changeDescription(text)}
                 />
-                <Button 
+                {/* <Button 
                 style={{marginTop:10}}
                 buttonStyle={{ backgroundColor: '#E63946' }}
-                onPress={() => this._addCategory()} title="Save" /> */}
+                onPress={() => this._addCategory()} title="Save" /> */} */}
             </View>
         );
     }

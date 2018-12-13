@@ -8,10 +8,10 @@ import ActionButton from "react-native-action-button";
 
 class CategoriesScreen extends React.Component {
     static navigationOptions = {
-        headerTintColor: "black",
-        title: "CATEGORIES",
+        headerTintColor: "white",
+        title: "Categories",
         headerStyle: {
-            backgroundColor: "#f96872"
+            backgroundColor: "#457B9D"
         },
         headerRight: (
             <View

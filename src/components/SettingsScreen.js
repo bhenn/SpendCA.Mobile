@@ -16,15 +16,11 @@ const list = [
 
 class SettingsScreen extends React.Component {
     static navigationOptions = {
-        title: "SETTINGS",
+        title: "Settings",
+        headerTintColor: "white",
         headerStyle: {
-            backgroundColor: "#f96872"
+            backgroundColor: "#457B9D"
         },
-        headerRight: (
-            <View
-                style={{ width: 35, alignContent: "center", marginRight: 20 }}
-            />
-        )
     };
 
     _itemClick(option) {

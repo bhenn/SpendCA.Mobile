@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { View, StyleSheet, ImageBackground } from "react-native";
 import { Button, Text } from "react-native-elements";
 import { changeEmail, changePassword, doLogin } from "../actions/UserActions";
-import LinearGradient from "react-native-linear-gradient";
 import InputWhite from './InputWhite'
 
 class loginScreen extends Component {
