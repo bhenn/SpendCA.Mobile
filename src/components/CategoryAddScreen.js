@@ -28,7 +28,21 @@ class CategoryAddScreen extends Component {
     }
 
     _addCategory = () => {
+        let error = this._validate()
+        if (error != '') {
+            alert(error)
+            return false
+        }
+
         this.props.addCategory(this.props.description);
+    }
+
+    _validate() {
+        let error = ''
+        if (this.props.description.trim() == '' || this.props.description == undefined)
+            error = error.concat('Description is required \n')
+
+        return error
     }
 
     render() {

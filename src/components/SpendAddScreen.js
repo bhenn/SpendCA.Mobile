@@ -89,7 +89,7 @@ class SpendAddScreen extends Component {
         if (this.props.date == '' || this.props.date == undefined)
             error = error.concat('Date is required \n')
 
-        if (this.props.description == '' || this.props.description == undefined)
+        if (this.props.description.trim() == '' || this.props.description == undefined)
             error = error.concat('Description is required \n')
 
         if (Number(this.props.value) == 0 || this.props.value == undefined)
