@@ -23,6 +23,7 @@ class HomeScreen extends React.Component {
     _renderItem = ({ item }) => (
         <SpendItem
             description={item.description}
+            location={item.location}
             category={item.category}
             value={item.value}
             date={item.date}

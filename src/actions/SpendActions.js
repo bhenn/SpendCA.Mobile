@@ -1,5 +1,6 @@
 import {
     CHANGE_DESCRIPTION,
+    CHANGE_LOCATION,
     CHANGE_CATEGORY,
     CHANGE_VALUE,
     PRE_ADD_SPEND,
@@ -21,6 +22,13 @@ import NavigationService from "../../NavigationService";
 export const changeDescription = text => {
     return {
         type: CHANGE_DESCRIPTION,
+        payload: text
+    };
+};
+
+export const changeLocation = text => {
+    return {
+        type: CHANGE_LOCATION,
         payload: text
     };
 };
@@ -60,7 +68,7 @@ export const filterSpends = text => {
 };
 
 
-export const addSpend = (description, value, category, date) => {
+export const addSpend = (description, location, value, category, date) => {
 
     let email = b64.encode(firebase.auth().currentUser.email);
 
@@ -72,7 +80,7 @@ export const addSpend = (description, value, category, date) => {
         firebase
             .database()
             .ref(`spend/${email}`)
-            .push({ description, value, category, date })
+            .push({ description, location, value, category, date })
             .then(() => addSpendSuccess(dispatch))
             .catch(error => addSpendError(dispatch, error));
     };
@@ -80,7 +88,7 @@ export const addSpend = (description, value, category, date) => {
 
 export const alterSpend = (spend) => {
     let email = b64.encode(firebase.auth().currentUser.email);
-    let {value, description, date, category, uid} = spend
+    let {value, description, location, date, category, uid} = spend
 
     //TODO - Find a better way to convert to number
     value = Number(value)
@@ -90,7 +98,7 @@ export const alterSpend = (spend) => {
         firebase
             .database()
             .ref(`spend/${email}/${uid}`)
-            .set({ description, value, category, date })
+            .set({ description, location, value, category, date })
             .then(() => alterSpendSuccess(dispatch))
             .catch(error => alterSpendError(dispatch, error));
     };

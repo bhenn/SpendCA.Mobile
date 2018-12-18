@@ -14,6 +14,7 @@ export const REGISTER_USER_SUCCESS = 'register_user_success';
 
 //SPEND
 export const CHANGE_DESCRIPTION = 'change_description';
+export const CHANGE_LOCATION = 'change_location';
 export const CHANGE_VALUE = 'change_value';
 export const CHANGE_CATEGORY = 'change_category';
 export const PRE_ADD_SPEND = 'pre_add_spend';
