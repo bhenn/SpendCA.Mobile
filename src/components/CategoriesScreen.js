@@ -1,6 +1,6 @@
 import React from "react";
-import { View, TouchableOpacity } from "react-native";
-import { Icon, ListItem, List } from "react-native-elements";
+import { View, StyleSheet } from "react-native";
+import { ListItem } from "react-native-elements";
 import { connect } from "react-redux";
 import { categoryFetch } from "../actions/CategoryActions";
 import NavigationService from "../../NavigationService";
@@ -8,10 +8,10 @@ import ActionButton from "react-native-action-button";
 
 class CategoriesScreen extends React.Component {
     static navigationOptions = {
-        headerTintColor: "black",
-        title: "CATEGORIES",
+        headerTintColor: "white",
+        title: "Categories",
         headerStyle: {
-            backgroundColor: "#f96872"
+            backgroundColor: "#457B9D"
         },
         headerRight: (
             <View
@@ -26,16 +26,17 @@ class CategoriesScreen extends React.Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
-                <List>
-                    {this.props.categories.map(item => (
-                        <ListItem
-                            key={item.description}
-                            title={item.description}
-                            hideChevron={true}
-                        />
-                    ))}
-                </List>
+            <View style={styles.container}>
+
+                {this.props.categories.map(item => (
+                    <ListItem
+                        key={item.description}
+                        title={item.description}
+                        hideChevron={true}
+                        containerStyle={{borderBottomColor: 'rgba(204, 204, 204, 0.6)', borderBottomWidth: 0.5}}
+                    />
+                ))}
+
                 <ActionButton
                     buttonColor="#f96872"
                     offsetX={30}
@@ -48,6 +49,14 @@ class CategoriesScreen extends React.Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex: 1,
+        paddingTop: 20,
+        backgroundColor: 'white',
+    }
+})
 
 mapStateToProps = state => ({
     categories: state.CategoryListReducer.categories

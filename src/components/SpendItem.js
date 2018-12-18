@@ -41,7 +41,9 @@ const styles = StyleSheet.create({
         margin: 1,
         flexDirection: 'row',
         flex: 1,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        borderBottomColor: 'rgba(204, 204, 204, 0.6)', 
+        borderBottomWidth: 0.5
     },
     category: {
         fontSize: 18,

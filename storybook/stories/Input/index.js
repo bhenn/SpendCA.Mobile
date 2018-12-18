@@ -1,17 +1,18 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { FormInput, Button, FormLabel } from "react-native-elements";
+import { Input, Button } from "react-native-elements";
 
 
 export default function CenterView({ children }) {
     return (
-        <View>
-            <FormLabel>Description</FormLabel>
-            <FormInput
+        <View style={style.container}>
+            <Input
+                style={style.input}
+                label={'Description'}
                 ref={ref => this.textInput = ref}
             />
             <Button
-                style={{ marginTop: 15 }}
+                style={{ marginTop: 15, borderColor: 'red' , borderWidth: 1}}
                 onPress={() =>
                     this.textInput.shake()
                 }
@@ -22,3 +23,16 @@ export default function CenterView({ children }) {
     )
 }
 
+const style = StyleSheet.create({
+    container: {
+        padding: 20
+    },
+    input: {
+        borderColor: 'red',
+        borderWidth: 1,
+        
+    }
+
+}
+
+)

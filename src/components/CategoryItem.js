@@ -30,11 +30,14 @@ class CategoryItem extends React.PureComponent {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "white",
-        width: 70,
+        backgroundColor: 'white',
+        width: 85,
         height: 70,
-        margin: 3,
-        padding: 4
+        // margin: 3,
+        padding: 4,
+        alignItems: 'center',
+        borderRightColor: 'rgba(204, 204, 204, 0.6)', 
+        borderRightWidth: 0.5
     },
     category_selected: {
         backgroundColor: '#e2e2e2'

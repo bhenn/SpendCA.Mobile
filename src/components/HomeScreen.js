@@ -10,8 +10,9 @@ import CategoryItem from '../components/CategoryItem'
 class HomeScreen extends React.Component {
     static navigationOptions = {
         title: "Overview",
+        headerTintColor: "white",
         headerStyle: {
-            backgroundColor: "#f96872"
+            backgroundColor: "#457B9D"
         }
     };
 
@@ -41,15 +42,16 @@ class HomeScreen extends React.Component {
         }
 
         return (
-            <View style={{ flex: 1 }}>
-                <View style={{ flex: 1, paddingTop: 10 }} >
+            <View style={ styles.container }>
+                <View style={{ flex: 1, padding: 10, borderBottomColor: 'rgba(204, 204, 204, 0.6)', borderBottomWidth: 2 }} >
                     {noSpendMessage}
                     <FlatList
                         data={this.props.categories}
                         extraData={this.props}
                         renderItem={this._renderItemCategory}
-                        contentContainerStyle={{ flexDirection: "row" }}
                         keyExtractor={item => item.category}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
                     />
                 </View>
                 <View style={{ flex: 8 }}>
@@ -74,6 +76,10 @@ class HomeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'white',
+    },
     noSpendMessage: {
         paddingTop: 30,
         alignItems: 'center'

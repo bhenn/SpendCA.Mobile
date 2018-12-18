@@ -1,6 +1,6 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
-import { ListItem, List, Button, Text } from "react-native-elements";
+import { ListItem, Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import { categoryFetch } from "../actions/CategoryActions";
 import NavigationService from "../../NavigationService";
@@ -16,15 +16,11 @@ const list = [
 
 class SettingsScreen extends React.Component {
     static navigationOptions = {
-        title: "SETTINGS",
+        title: "Settings",
+        headerTintColor: "white",
         headerStyle: {
-            backgroundColor: "#f96872"
+            backgroundColor: "#457B9D"
         },
-        headerRight: (
-            <View
-                style={{ width: 35, alignContent: "center", marginRight: 20 }}
-            />
-        )
     };
 
     _itemClick(option) {
@@ -45,21 +41,30 @@ class SettingsScreen extends React.Component {
     render() {
         return (
             <View style={styles.contentView}>
-                <View>
-                    <List>
-                        {list.map(item => (
-                            <TouchableOpacity key={item.key} onPress={() => this._itemClick(item.key)}>
-                                <ListItem
-                                    key={item.key}
-                                    title={item.title}
-                                    leftIcon={{ name: item.icon }}
-                                />
-                            </TouchableOpacity>
-                        ))}
-                    </List>
+                <View style={styles.listView}>
+                    {list.map(item => (
+                        <TouchableOpacity key={item.key} onPress={() => this._itemClick(item.key)}>
+                            <ListItem
+                                key={item.key}
+                                title={item.title}
+                                leftIcon={{ name: item.icon }}
+                            />
+                        </TouchableOpacity>
+                    ))}
                 </View>
                 <View style={styles.logoutView} >
-                    <Button onPress={() => this._logout()} title="Logout" />
+                    <TouchableOpacity key={'logout'} onPress={() => this._logout()}>
+                        <ListItem
+                            key={'logout'}
+                            title={'Logout'}
+                            leftIcon={
+                                <Icon
+                                    type='feather'
+                                    name='power'
+                                />
+                            }
+                        />
+                    </TouchableOpacity>
                 </View>
             </View>
         );
@@ -71,14 +76,16 @@ mapStateToProps = state => ({
 });
 
 const styles = StyleSheet.create({
-
+    listView: {
+        paddingTop: 20
+    },
     contentView: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-between'
     },
     logoutView: {
-        marginBottom: 50,
+        paddingBottom: 40
     }
 
 

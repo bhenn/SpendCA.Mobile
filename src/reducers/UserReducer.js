@@ -1,7 +1,7 @@
 import { CHANGE_EMAIL, CHANGE_NAME, CHANGE_PASSWORD, REGISTER_USER_ERROR, LOGIN_ERROR, DO_LOGIN, REGISTER_USER_LOADING, REGISTER_USER_SUCCESS, LOGIN_SUCCESS } from "../actions/types";
 const INITIAL_STATE = {
-    email: 'brunofhenn@gmail.com',
-    password: '123456',
+    email: '',
+    password: '',
     name: '', 
     registerError: '',
     loginError: '',

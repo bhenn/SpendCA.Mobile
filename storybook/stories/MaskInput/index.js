@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInputMask } from "react-native-masked-text";
-import { FormInput } from "react-native-elements";
+import { Input } from "react-native-elements";
 
 
 export default function CenterView({ children }) {
@@ -14,9 +14,9 @@ export default function CenterView({ children }) {
                 type="money"
                 options={{ separator: '.', delimiter: ',', unit: '' }}
             />
-            <FormInput>
+            <Input>
                 
-            </FormInput>
+            </Input>
         </View>
     )
 }
