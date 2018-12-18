@@ -14,6 +14,8 @@ import {
     REMOVE_SPEND_ERROR,
     REMOVE_SPEND_SUCCESS,
     FILTER_SPENDS,
+    SPEND_FETCH_START,
+    SPEND_FETCH_FINISHED,
 } from "../actions/types";
 import b64 from "base-64";
 import firebase from "firebase";
@@ -88,7 +90,7 @@ export const addSpend = (description, location, value, category, date) => {
 
 export const alterSpend = (spend) => {
     let email = b64.encode(firebase.auth().currentUser.email);
-    let {value, description, location, date, category, uid} = spend
+    let { value, description, location, date, category, uid } = spend
 
     //TODO - Find a better way to convert to number
     value = Number(value)
@@ -107,7 +109,7 @@ export const alterSpend = (spend) => {
 export const deleteSpend = (uid) => {
     let email = b64.encode(firebase.auth().currentUser.email);
 
-    if (uid == '' || uid == undefined){
+    if (uid == '' || uid == undefined) {
         return {
             type: REMOVE_SPEND_ERROR,
             payload: 'UID not informed'
@@ -172,13 +174,20 @@ const removeSpendError = dispatch => {
 
 
 export const spendsFetch = () => {
-    let email = b64.encode(firebase.auth().currentUser.email);
+
     return dispatch => {
+
+        dispatch({ type: SPEND_FETCH_START })
+
+        let email = b64.encode(firebase.auth().currentUser.email);
+
         firebase
             .database()
             .ref(`spend/${email}`)
             .on("value", snapshot => {
                 dispatch({ type: LIST_SPENDS, payload: snapshot.val() });
-            });
+                dispatch({ type: SPEND_FETCH_FINISHED })
+            })
+        
     };
 };
