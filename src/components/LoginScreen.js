@@ -53,8 +53,8 @@ class loginScreen extends Component {
                                     this.props.password
                                 )
                             }
-                            buttonStyle={{ marginBottom: 20, backgroundColor: '#E63946', height: 40, width: 300 }}
-                            style={{marginTop: 120}}
+                            buttonStyle={{ backgroundColor: '#E63946', height: 40, width: 300 }}
+                            style={{marginTop: 120, marginBottom: 10 }}
                             loadingProps={{ size: "small", color: "white" }}
                             disabled={this.props.loadingLogin}
                             disabledStyle={{ backgroundColor: '#BC2E24' }}
@@ -95,20 +95,21 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     logo: {
-        flex: 2
+        flex: 2,
+        justifyContent: 'center'
     },
     loginInput: {
         flex: 2.5,
-        marginTop: 50,
         width: 300,
         height: 150,
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     loginErrorMessage: {
-        marginTop: 10,
         fontSize: 16,
         width: 300,
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: 'center'
     },
 
 });

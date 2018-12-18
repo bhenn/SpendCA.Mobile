@@ -69,8 +69,8 @@ class newUserScreen extends Component {
                         <Button
                             title="Create account"
                             onPress={() => this._registerUser()}
-                            buttonStyle={{ marginBottom: 20, backgroundColor: '#E63946', height: 40, width: 300 }}
-                            style={{ marginTop: 70 }}
+                            buttonStyle={{ backgroundColor: '#E63946', height: 40, width: 300 }}
+                            style={{ marginTop: 70, marginBottom: 20 }}
                             loadingProps={{ size: "small", color: "white" }}
                             disabled={this.props.loading}
                             disabledStyle={{ backgroundColor: '#BC2E24' }}
@@ -111,20 +111,21 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     logo: {
-        flex: 2
+        flex: 2,
+        justifyContent: 'center', 
     },
     inputContainer: {
         flex: 2.5,
-        marginTop: 50,
         width: 300,
         height: 150,
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     regiserErrorMessage: {
-        marginTop: 20,
         fontSize: 16,
         width: 300,
         alignItems: "center",
+        justifyContent: 'center'
     },
 
 });
