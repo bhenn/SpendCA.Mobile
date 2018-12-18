@@ -7,6 +7,7 @@ export const CHANGE_DATE = 'change_date'
 export const LOGIN_SUCCESS = 'login_success'
 export const LOGIN_ERROR = 'login_error'
 export const DO_LOGIN = 'do_login'
+export const DO_LOGOUT = 'do_logout'
 
 export const REGISTER_USER_LOADING = 'LOADING_REGISTER'
 export const REGISTER_USER_ERROR = 'register_user_error'

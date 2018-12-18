@@ -1,49 +1,52 @@
-import { CHANGE_EMAIL, CHANGE_NAME, CHANGE_PASSWORD, REGISTER_USER_ERROR, LOGIN_ERROR, DO_LOGIN, REGISTER_USER_LOADING, REGISTER_USER_SUCCESS, LOGIN_SUCCESS } from "../actions/types";
+import { CHANGE_EMAIL, CHANGE_NAME, CHANGE_PASSWORD, REGISTER_USER_ERROR, LOGIN_ERROR, DO_LOGIN, REGISTER_USER_LOADING, REGISTER_USER_SUCCESS, LOGIN_SUCCESS, DO_LOGOUT } from "../actions/types";
 const INITIAL_STATE = {
     email: '',
     password: '',
-    name: '', 
+    name: '',
     registerError: '',
     loginError: '',
     loginLoading: false,
-    registerLoading: false, 
+    registerLoading: false,
 }
 
 export default (state = INITIAL_STATE, action) => {
-    
+
     switch (action.type) {
         case CHANGE_EMAIL:
-        return {...state, email: action.payload}    
+            return { ...state, email: action.payload }
 
         case CHANGE_PASSWORD:
-        return {...state, password: action.payload}    
+            return { ...state, password: action.payload }
 
         case CHANGE_NAME:
-        return {...state, name: action.payload}    
-        
-        case DO_LOGIN: 
-        return {...state, loginLoading: true}        
+            return { ...state, name: action.payload }
+
+        case DO_LOGIN:
+            return { ...state, loginLoading: true }
+
+        case DO_LOGOUT:
+            return { ...state, password: '' }
 
         case LOGIN_ERROR:
-        return {...state, loginError: action.payload, loginLoading: false}
+            return { ...state, loginError: action.payload, loginLoading: false }
 
         case LOGIN_SUCCESS:
-        return {...state, loginError: '', loginLoading: false}
+            return { ...state, loginError: '', loginLoading: false }
 
-        case REGISTER_USER_LOADING: 
-        return {...state, registerLoading: true}
+        case REGISTER_USER_LOADING:
+            return { ...state, registerLoading: true }
 
         case REGISTER_USER_ERROR:
-        return {...state, registerError: action.payload, registerLoading: false}    
+            return { ...state, registerError: action.payload, registerLoading: false }
 
-        case REGISTER_USER_SUCCESS: 
-        return {...state, registerError: '', registerLoading: false, password: ''}
+        case REGISTER_USER_SUCCESS:
+            return { ...state, registerError: '', registerLoading: false, password: '' }
 
 
 
-        default: 
-        return state    
+        default:
+            return state
     }
-    
-    
+
+
 }

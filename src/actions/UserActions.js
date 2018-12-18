@@ -9,7 +9,8 @@ import {
     DO_LOGIN,
     REGISTER_USER_LOADING,
     REGISTER_USER_SUCCESS,
-    LOGIN_SUCCESS
+    LOGIN_SUCCESS,
+    DO_LOGOUT
 } from "./types";
 import NavigationService from "../../NavigationService";
 
@@ -74,4 +75,8 @@ export const doLogin = (email, password) => {
             );
     };
 };
+
+export const doLogout = () => {
+    return {type: DO_LOGOUT}
+}
 
