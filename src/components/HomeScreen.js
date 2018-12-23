@@ -6,6 +6,7 @@ import NavigationService from "../../NavigationService";
 import SpendItem from "./SpendItem";
 import ActionButton from "react-native-action-button";
 import CategoryItem from '../components/CategoryItem'
+import Dinero from '../../node_modules/dinero.js/build/esm/dinero'
 
 class HomeScreen extends React.Component {
     static navigationOptions = {
@@ -64,6 +65,9 @@ class HomeScreen extends React.Component {
                         keyExtractor={item => item.uid}
                     />
                 </View>
+                <View style={styles.totalContainer}>
+                    <Text style={styles.total} >{Dinero({ amount: this.props.total }).toFormat()}</Text>
+                </View>
                 <ActionButton
                     buttonColor="#f96872"
                     offsetX={30}
@@ -96,6 +100,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    totalContainer: {
+        alignItems: 'center',
+        paddingTop: 5,
+        paddingBottom: 5,
+        borderTopColor: 'rgba(204, 204, 204, 0.6)',
+        borderTopWidth: 2,
+    },
+    total: {
+        fontSize: 20
+    },
 })
 
 mapStateToProps = state => ({
@@ -103,6 +117,7 @@ mapStateToProps = state => ({
     spends_filtered: state.SpendListReducer.spends_filtered,
     categories: state.SpendListReducer.categories,
     isLoading: state.SpendListReducer.isLoading,
+    total: state.SpendListReducer.total,
 });
 
 export default connect(

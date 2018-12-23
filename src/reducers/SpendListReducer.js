@@ -6,6 +6,7 @@ const INITIAL_STATE = {
     spends_filtered: [],
     spends_by_category: [],
     filter_category: '',
+    total: 0,
     isLoading: false,
 
 }
@@ -27,6 +28,7 @@ export default (state = INITIAL_STATE, action) => {
             } else {
                 spends_filtered = spends
             }
+            total = _.sumBy(spends_filtered, 'value')
 
             const categories = _.chain(spends).groupBy('category').map((val, uid) => {
                 return {
@@ -35,7 +37,7 @@ export default (state = INITIAL_STATE, action) => {
                 }
             }).value()
 
-            return { ...state, spends_filtered, spends, categories }
+            return { ...state, spends_filtered, spends, categories, total }
 
         case FILTER_SPENDS:
             var filter = (state.filter_category == action.payload ? '' : action.payload)
@@ -47,7 +49,9 @@ export default (state = INITIAL_STATE, action) => {
                 spends_filtered = state.spends
             }
 
-            return { ...state, spends_filtered, filter_category: filter }
+            total = _.sumBy(spends_filtered, 'value')
+
+            return { ...state, spends_filtered, filter_category: filter, total }
 
         case SPEND_FETCH_START:
             return { ...state, isLoading: true,  }
