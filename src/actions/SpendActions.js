@@ -1,5 +1,6 @@
 import {
     CHANGE_DESCRIPTION,
+    CHANGE_LOCATION,
     CHANGE_CATEGORY,
     CHANGE_VALUE,
     PRE_ADD_SPEND,
@@ -13,6 +14,8 @@ import {
     REMOVE_SPEND_ERROR,
     REMOVE_SPEND_SUCCESS,
     FILTER_SPENDS,
+    SPEND_FETCH_START,
+    SPEND_FETCH_FINISHED,
 } from "../actions/types";
 import b64 from "base-64";
 import firebase from "firebase";
@@ -21,6 +24,13 @@ import NavigationService from "../../NavigationService";
 export const changeDescription = text => {
     return {
         type: CHANGE_DESCRIPTION,
+        payload: text
+    };
+};
+
+export const changeLocation = text => {
+    return {
+        type: CHANGE_LOCATION,
         payload: text
     };
 };
@@ -60,7 +70,7 @@ export const filterSpends = text => {
 };
 
 
-export const addSpend = (description, value, category, date) => {
+export const addSpend = (description, location, value, category, date) => {
 
     let email = b64.encode(firebase.auth().currentUser.email);
 
@@ -72,7 +82,7 @@ export const addSpend = (description, value, category, date) => {
         firebase
             .database()
             .ref(`spend/${email}`)
-            .push({ description, value, category, date })
+            .push({ description, location, value, category, date })
             .then(() => addSpendSuccess(dispatch))
             .catch(error => addSpendError(dispatch, error));
     };
@@ -80,7 +90,7 @@ export const addSpend = (description, value, category, date) => {
 
 export const alterSpend = (spend) => {
     let email = b64.encode(firebase.auth().currentUser.email);
-    let {value, description, date, category, uid} = spend
+    let { value, description, location, date, category, uid } = spend
 
     //TODO - Find a better way to convert to number
     value = Number(value)
@@ -90,7 +100,7 @@ export const alterSpend = (spend) => {
         firebase
             .database()
             .ref(`spend/${email}/${uid}`)
-            .set({ description, value, category, date })
+            .set({ description, location, value, category, date })
             .then(() => alterSpendSuccess(dispatch))
             .catch(error => alterSpendError(dispatch, error));
     };
@@ -99,7 +109,7 @@ export const alterSpend = (spend) => {
 export const deleteSpend = (uid) => {
     let email = b64.encode(firebase.auth().currentUser.email);
 
-    if (uid == '' || uid == undefined){
+    if (uid == '' || uid == undefined) {
         return {
             type: REMOVE_SPEND_ERROR,
             payload: 'UID not informed'
@@ -164,13 +174,20 @@ const removeSpendError = dispatch => {
 
 
 export const spendsFetch = () => {
-    let email = b64.encode(firebase.auth().currentUser.email);
+
     return dispatch => {
+
+        dispatch({ type: SPEND_FETCH_START })
+
+        let email = b64.encode(firebase.auth().currentUser.email);
+
         firebase
             .database()
             .ref(`spend/${email}`)
             .on("value", snapshot => {
                 dispatch({ type: LIST_SPENDS, payload: snapshot.val() });
-            });
+                dispatch({ type: SPEND_FETCH_FINISHED })
+            })
+        
     };
 };

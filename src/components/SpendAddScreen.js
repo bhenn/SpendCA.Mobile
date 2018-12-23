@@ -4,6 +4,7 @@ import { Input, Button, Text, Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import {
     changeDescription,
+    changeLocation,
     changeValue,
     changeCategory,
     changeDate,
@@ -66,6 +67,7 @@ class SpendAddScreen extends Component {
             this.props.alterSpend({
                 uid: this.props.uid,
                 description: this.props.description,
+                location: this.props.location,
                 value: value,
                 category: this.props.category,
                 date: this.props.date
@@ -73,6 +75,7 @@ class SpendAddScreen extends Component {
         } else {
             this.props.addSpend(
                 this.props.description,
+                this.props.location,
                 value,
                 this.props.category,
                 this.props.date
@@ -86,7 +89,7 @@ class SpendAddScreen extends Component {
         if (this.props.date == '' || this.props.date == undefined)
             error = error.concat('Date is required \n')
 
-        if (this.props.description == '' || this.props.description == undefined)
+        if (this.props.description.trim() == '' || this.props.description == undefined)
             error = error.concat('Description is required \n')
 
         if (Number(this.props.value) == 0 || this.props.value == undefined)
@@ -170,6 +173,11 @@ class SpendAddScreen extends Component {
                         value={this.props.description}
                         onChangeText={text => this.props.changeDescription(text)}
                     />
+                    <Input
+                        label={'Location'}
+                        value={this.props.location}
+                        onChangeText={text => this.props.changeLocation(text)}
+                    />
                     <TouchableOpacity onPress={() => this.refs.picker.show()}>
                         <Input
                             label={'Category'}
@@ -199,6 +207,7 @@ const mapStateToProps = state => ({
     uid: state.SpendReducer.uid,
     value: state.SpendReducer.value,
     description: state.SpendReducer.description,
+    location: state.SpendReducer.location,
     date: state.SpendReducer.date,
     category: state.SpendReducer.category,
     categories_array: state.CategoryListReducer.categories_array
@@ -208,6 +217,7 @@ export default connect(
     mapStateToProps,
     {
         changeDescription,
+        changeLocation, 
         changeValue,
         changeCategory,
         changeDate,

@@ -1,12 +1,14 @@
-import { LIST_SPENDS, FILTER_SPENDS } from "../actions/types";
+import { LIST_SPENDS, FILTER_SPENDS, SPEND_FETCH_START, SPEND_FETCH_FINISHED } from "../actions/types";
 import _ from 'lodash'
-
 
 const INITIAL_STATE = {
     spends: [],
     spends_filtered: [],
     spends_by_category: [],
     filter_category: '',
+    total: 0,
+    isLoading: false,
+
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -21,12 +23,12 @@ export default (state = INITIAL_STATE, action) => {
                 return { ...val, uid }
             })
 
-            
             if (state.filter_category != '') {
                 spends_filtered = spends.filter(spend => spend.category === state.filter_category)
-            }else{
+            } else {
                 spends_filtered = spends
             }
+            total = _.sumBy(spends_filtered, 'value')
 
             const categories = _.chain(spends).groupBy('category').map((val, uid) => {
                 return {
@@ -35,19 +37,28 @@ export default (state = INITIAL_STATE, action) => {
                 }
             }).value()
 
-            return { ...state, spends_filtered, spends, categories }
+            return { ...state, spends_filtered, spends, categories, total }
 
         case FILTER_SPENDS:
             var filter = (state.filter_category == action.payload ? '' : action.payload)
             var spends_filtered
 
-            if (filter != ''){
+            if (filter != '') {
                 spends_filtered = state.spends.filter(spend => spend.category === action.payload)
-            }else{
+            } else {
                 spends_filtered = state.spends
             }
 
-            return { ...state, spends_filtered, filter_category: filter }
+            total = _.sumBy(spends_filtered, 'value')
+
+            return { ...state, spends_filtered, filter_category: filter, total }
+
+        case SPEND_FETCH_START:
+            return { ...state, isLoading: true,  }
+
+        case SPEND_FETCH_FINISHED:
+            return { ...state, isLoading: false }
+
 
         default:
             return state
