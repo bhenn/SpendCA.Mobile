@@ -17,9 +17,8 @@ import {
     SPEND_FETCH_START,
     SPEND_FETCH_FINISHED,
 } from "../actions/types";
-import b64 from "base-64";
-import firebase from "firebase";
 import NavigationService from "../../NavigationService";
+import api from '../api';
 
 export const changeDescription = text => {
     return {
@@ -72,58 +71,58 @@ export const filterSpends = text => {
 
 export const addSpend = (description, location, value, category, date) => {
 
-    let email = b64.encode(firebase.auth().currentUser.email);
+    // let email = b64.encode(firebase.auth().currentUser.email);
 
-    //TODO - Find a better way to convert to number
-    value = Number(value)
-    date = date.toString()
+    // //TODO - Find a better way to convert to number
+    // value = Number(value)
+    // date = date.toString()
 
-    return dispatch => {
-        firebase
-            .database()
-            .ref(`spend/${email}`)
-            .push({ description, location, value, category, date })
-            .then(() => addSpendSuccess(dispatch))
-            .catch(error => addSpendError(dispatch, error));
-    };
+    // return dispatch => {
+    //     firebase
+    //         .database()
+    //         .ref(`spend/${email}`)
+    //         .push({ description, location, value, category, date })
+    //         .then(() => addSpendSuccess(dispatch))
+    //         .catch(error => addSpendError(dispatch, error));
+    // };
 };
 
 export const alterSpend = (spend) => {
-    let email = b64.encode(firebase.auth().currentUser.email);
-    let { value, description, location, date, category, uid } = spend
+    // let email = b64.encode(firebase.auth().currentUser.email);
+    // let { value, description, location, date, category, uid } = spend
 
-    //TODO - Find a better way to convert to number
-    value = Number(value)
-    date = date.toString()
+    // //TODO - Find a better way to convert to number
+    // value = Number(value)
+    // date = date.toString()
 
-    return dispatch => {
-        firebase
-            .database()
-            .ref(`spend/${email}/${uid}`)
-            .set({ description, location, value, category, date })
-            .then(() => alterSpendSuccess(dispatch))
-            .catch(error => alterSpendError(dispatch, error));
-    };
+    // return dispatch => {
+    //     firebase
+    //         .database()
+    //         .ref(`spend/${email}/${uid}`)
+    //         .set({ description, location, value, category, date })
+    //         .then(() => alterSpendSuccess(dispatch))
+    //         .catch(error => alterSpendError(dispatch, error));
+    // };
 }
 
 export const deleteSpend = (uid) => {
-    let email = b64.encode(firebase.auth().currentUser.email);
+    // let email = b64.encode(firebase.auth().currentUser.email);
 
-    if (uid == '' || uid == undefined) {
-        return {
-            type: REMOVE_SPEND_ERROR,
-            payload: 'UID not informed'
-        }
-    }
+    // if (uid == '' || uid == undefined) {
+    //     return {
+    //         type: REMOVE_SPEND_ERROR,
+    //         payload: 'UID not informed'
+    //     }
+    // }
 
-    return dispatch => {
-        firebase
-            .database()
-            .ref(`spend/${email}/${uid}`)
-            .remove()
-            .then(() => removeSpendSuccess(dispatch))
-            .catch(error => removeSpendError(dispatch, error));
-    };
+    // return dispatch => {
+    //     firebase
+    //         .database()
+    //         .ref(`spend/${email}/${uid}`)
+    //         .remove()
+    //         .then(() => removeSpendSuccess(dispatch))
+    //         .catch(error => removeSpendError(dispatch, error));
+    // };
 }
 
 export const changeSpend = spend => {
@@ -179,15 +178,12 @@ export const spendsFetch = () => {
 
         dispatch({ type: SPEND_FETCH_START })
 
-        let email = b64.encode(firebase.auth().currentUser.email);
-
-        firebase
-            .database()
-            .ref(`spend/${email}`)
-            .on("value", snapshot => {
-                dispatch({ type: LIST_SPENDS, payload: snapshot.val() });
+        api.get('spends')
+            .then(res => {
+                dispatch({ type: LIST_SPENDS, payload: res.data })
                 dispatch({ type: SPEND_FETCH_FINISHED })
             })
-        
+            .catch(error => console.warn(error.message))
+
     };
 };
