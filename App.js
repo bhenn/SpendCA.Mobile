@@ -24,6 +24,9 @@ class App extends Component {
             messagingSenderId: Config.FIREBASE_MESSAGE_SENDER_ID
         };
         firebase.initializeApp(config);
+
+        global.apiUrl = "https://spendcadev.azurewebsites.net/";
+
     }
 
     render() {

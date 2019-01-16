@@ -1,8 +1,9 @@
 import React from "react";
-import { ActivityIndicator, AsyncStorage, StatusBar, View } from "react-native";
-import firebase from 'firebase'
+import { ActivityIndicator, StatusBar, View } from "react-native";
+import { getUserToken } from "../actions/UserActions";
+import { connect } from "react-redux";
 
-export default class AuthLoadingScreen extends React.Component {
+class AuthLoadingScreen extends React.Component {
     constructor(props) {
         super(props);
         this._bootstrapAsync();
@@ -10,17 +11,22 @@ export default class AuthLoadingScreen extends React.Component {
 
     // Fetch the token from storage then navigate to our appropriate place
     _bootstrapAsync = async () => {
-        // const userToken = await AsyncStorage.getItem('userToken');
 
         // This will switch to the App screen or Auth screen and this loading
         // screen will be unmounted and thrown away.
         // this.props.navigation.navigate(userToken ? "App" : "Auth");
         // setTimeout(() => {
-            firebase.auth().onAuthStateChanged(user => {
-                this.props.navigation.navigate(user ? 'Home'  : 'Auth')
-            })
-             
-        // }, 500);
+        // firebase.auth().onAuthStateChanged(user => {
+        //     this.props.navigation.navigate(user ? 'Home'  : 'Auth')
+        // })
+
+        // this.props.getUserToken().then(() => {
+        //     console.log('token', this.props.token)
+        // })
+        this.props.getUserToken().then(() => {
+            this.props.navigation.navigate(this.props.token ? 'Home'  : 'Auth')
+        })
+
     };
 
     // Render any loading content that you like here
@@ -33,3 +39,9 @@ export default class AuthLoadingScreen extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    token: state.UserReducer.token
+});
+
+export default connect(mapStateToProps, {getUserToken})(AuthLoadingScreen);

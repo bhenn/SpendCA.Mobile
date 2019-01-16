@@ -18,7 +18,7 @@ class HomeScreen extends React.Component {
     };
 
     componentWillMount() {
-        this.props.spendsFetch();
+        // this.props.spendsFetch();
     }
 
     _renderItem = ({ item }) => (
