@@ -11,10 +11,12 @@ import NavigationService from "../../NavigationService";
 import CategoriesScreen from "../components/CategoriesScreen";
 import CategoryAddScreen from "../components/CategoryAddScreen";
 import SettingsScreen from '../components/SettingsScreen';
+import CategoriesSelectScreen from "../components/CategorySelectScreen";
 
 const HomeStack = createStackNavigator({
     Home: HomeScreen,
-    SpendAdd: SpendAddScreen
+    SpendAdd: SpendAddScreen,
+    CategorySelect: CategoriesSelectScreen
 })
 
 const SettingsStack = createStackNavigator({
@@ -32,32 +34,32 @@ const TabNavigator = createBottomTabNavigator({
     Home: HomeStack,
     Settings: SettingsStack,
 },
-{
-    navigationOptions: ({ navigation }) => ({
-        tabBarIcon: ({ focused, tintColor }) => {
-            const { routeName } = navigation.state;
-            let iconName;
-            if (routeName === 'Home') {
-                iconName = 'ios-basket';
-            } else if (routeName === 'Settings') {
-                iconName = 'ios-options';
-            }
+    {
+        navigationOptions: ({ navigation }) => ({
+            tabBarIcon: ({ focused, tintColor }) => {
+                const { routeName } = navigation.state;
+                let iconName;
+                if (routeName === 'Home') {
+                    iconName = 'ios-basket';
+                } else if (routeName === 'Settings') {
+                    iconName = 'ios-options';
+                }
 
-            return <Ionicons name={iconName} size={25} color={tintColor} />;
+                return <Ionicons name={iconName} size={25} color={tintColor} />;
+            },
+
+        }),
+        tabBarOptions: {
+            activeTintColor: '#457B9D',
+            inactiveTintColor: 'gray',
         },
-        
-    }),
-    tabBarOptions: {
-        activeTintColor: '#457B9D',
-        inactiveTintColor: 'gray',
-    },
-})
+    })
 
 const RootNavigator = createSwitchNavigator(
     {
-    AuthLoading: AuthLoadingScreen,
-    App: TabNavigator,
-    Auth: AuthStack    
+        AuthLoading: AuthLoadingScreen,
+        App: TabNavigator,
+        Auth: AuthStack
     },
     {
         initialRouteName: 'AuthLoading',
@@ -67,7 +69,7 @@ const RootNavigator = createSwitchNavigator(
 class Nav extends Component {
     render() {
         return (
-            <RootNavigator ref={navigatorRef => { NavigationService.setTopLevelNavigator(navigatorRef) }}/>
+            <RootNavigator ref={navigatorRef => { NavigationService.setTopLevelNavigator(navigatorRef) }} />
         )
     }
 }

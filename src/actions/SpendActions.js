@@ -41,10 +41,10 @@ export const changeValue = text => {
     };
 };
 
-export const changeCategory = text => {
+export const changeCategory = (category_id, category_desc) => {
     return {
         type: CHANGE_CATEGORY,
-        payload: text
+        payload: { category_id, category_desc }
     };
 };
 
@@ -69,7 +69,9 @@ export const filterSpends = text => {
 };
 
 
-export const addSpend = (description, location, value, category, date) => {
+export const addSpend = (spend) => {
+
+    let { description, location, value, category_id, date } = spend
 
     // let email = b64.encode(firebase.auth().currentUser.email);
 
@@ -85,11 +87,23 @@ export const addSpend = (description, location, value, category, date) => {
     //         .then(() => addSpendSuccess(dispatch))
     //         .catch(error => addSpendError(dispatch, error));
     // };
+
+    return dispatch => {
+        api.post("spends", { description, location, value, categoryId: category_id, date })
+            .then(spend => {
+                addSpendSuccess(dispatch)
+            })
+            .catch(error => {
+                console.log(error);
+                addSpendError(dispatch, error.message)
+            })
+    }
+
 };
 
 export const alterSpend = (spend) => {
     // let email = b64.encode(firebase.auth().currentUser.email);
-    // let { value, description, location, date, category, uid } = spend
+    // let { value, description, location, date, category_id, uid } = spend
 
     // //TODO - Find a better way to convert to number
     // value = Number(value)
@@ -105,7 +119,7 @@ export const alterSpend = (spend) => {
     // };
 }
 
-export const deleteSpend = (uid) => {
+export const deleteSpend = (id) => {
     // let email = b64.encode(firebase.auth().currentUser.email);
 
     // if (uid == '' || uid == undefined) {
