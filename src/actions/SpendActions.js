@@ -71,22 +71,7 @@ export const filterSpends = text => {
 
 export const addSpend = (spend) => {
 
-    let { description, location, value, category_id, date } = spend
-
-    // let email = b64.encode(firebase.auth().currentUser.email);
-
-    // //TODO - Find a better way to convert to number
-    // value = Number(value)
-    // date = date.toString()
-
-    // return dispatch => {
-    //     firebase
-    //         .database()
-    //         .ref(`spend/${email}`)
-    //         .push({ description, location, value, category, date })
-    //         .then(() => addSpendSuccess(dispatch))
-    //         .catch(error => addSpendError(dispatch, error));
-    // };
+    const { description, location, value, category_id, date } = spend
 
     return dispatch => {
         api.post("spends", { description, location, value, categoryId: category_id, date })
@@ -94,7 +79,7 @@ export const addSpend = (spend) => {
                 addSpendSuccess(dispatch)
             })
             .catch(error => {
-                console.log(error);
+                console.warn(error);
                 addSpendError(dispatch, error.message)
             })
     }
@@ -102,21 +87,20 @@ export const addSpend = (spend) => {
 };
 
 export const alterSpend = (spend) => {
-    // let email = b64.encode(firebase.auth().currentUser.email);
-    // let { value, description, location, date, category_id, uid } = spend
 
-    // //TODO - Find a better way to convert to number
-    // value = Number(value)
-    // date = date.toString()
+    const { id, description, location, value, category_id, date } = spend
 
-    // return dispatch => {
-    //     firebase
-    //         .database()
-    //         .ref(`spend/${email}/${uid}`)
-    //         .set({ description, location, value, category, date })
-    //         .then(() => alterSpendSuccess(dispatch))
-    //         .catch(error => alterSpendError(dispatch, error));
-    // };
+    return dispatch => {
+        api.put("spends/" + id, { id, description, location, value, categoryId: category_id, date })
+            .then(() => {
+                alterSpendSuccess(dispatch)
+            })
+            .catch(error => {
+                console.warn(error.message);
+                alterSpendError(dispatch, error.message)
+            })
+    }
+
 }
 
 export const deleteSpend = (id) => {
@@ -147,9 +131,7 @@ export const changeSpend = spend => {
 }
 
 const addSpendSuccess = dispatch => {
-    dispatch({
-        type: ADD_SPEND_SUCCESS
-    });
+    dispatch({type: ADD_SPEND_SUCCESS});
     NavigationService.navigate('Home')
 };
 

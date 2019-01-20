@@ -58,6 +58,8 @@ class HomeScreen extends React.Component {
                         renderItem={this._renderItem}
                         data={this.props.spends_filtered}
                         keyExtractor={item => item.id}
+                        onRefresh={() => this.props.spendsFetch()}
+                        refreshing={this.props.isLoading}
                     />
                 </View>
                 <View style={styles.totalContainer}>

@@ -63,7 +63,7 @@ export default (state = INITIAL_STATE, action) => {
         case SPEND_FETCH_FINISHED:
             return { ...state, isLoading: false }
 
-
+        
         default:
             return state
     }

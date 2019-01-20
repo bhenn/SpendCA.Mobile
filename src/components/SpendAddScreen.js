@@ -68,19 +68,12 @@ class SpendAddScreen extends Component {
             value = parseFloat(this.props.value)
         }
 
-        if (this.props.id != null) {
-            this.props.alterSpend({
-                id: this.props.id,
-                description: this.props.description,
-                location: this.props.location,
-                value: value,
-                category: this.props.category,
-                date: this.props.date
-            });
-        } else {
-            const {description, location, category_id, date} = this.props
+        const { id, description, location, category_id, date } = this.props
 
-            this.props.addSpend({description, location, category_id, date, value});
+        if (this.props.id != null) {
+            this.props.alterSpend({ id, description, location, category_id, date });
+        } else {
+            this.props.addSpend({ description, location, category_id, date, value });
         }
     }
 
@@ -137,7 +130,7 @@ class SpendAddScreen extends Component {
 
         return (
             <View style={styles.container}>
-            <Text>ID: {this.props.id}</Text>
+                <Text>ID: {this.props.id}</Text>
                 <View style={styles.valueContainer}>
                     <TextInputMask
                         ref={ref => (this._valueInput = ref)}

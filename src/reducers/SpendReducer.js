@@ -18,7 +18,7 @@ const INITIAL_STATE = {
     location: '',
     value: '',
     category_id: null,
-    category_desc:'',
+    category_desc: '',
     date: ''
 };
 
@@ -26,7 +26,7 @@ export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case CHANGE_DESCRIPTION:
             return { ...state, description: action.payload };
- 
+
         case CHANGE_LOCATION:
             return { ...state, location: action.payload };
 
@@ -34,8 +34,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, value: action.payload };
 
         case CHANGE_CATEGORY:
-            const {category_id, category_desc} = action.payload
-            return { ...state, category_id, category_desc};
+            const { category_id, category_desc } = action.payload
+            return { ...state, category_id, category_desc };
 
         case CHANGE_DATE:
             return { ...state, date: action.payload };
@@ -48,10 +48,10 @@ export default (state = INITIAL_STATE, action) => {
             };
 
         case PRE_ADD_SPEND:
-            return { ...state, category: '', value: '0', description: '', location: '', id: null, date: new Date() };
+            return { ...state, category_desc: '', category_id: null, value: '0', description: '', location: '', id: null, date: new Date() };
 
         case ADD_SPEND_SUCCESS:
-            return { ...state, category: '', value: '', description: '', location: '' };
+            return { ...state, category_desc: '', category_id: null, value: '', description: '', location: '' };
 
         case ADD_SPEND_ERROR:
             return state;
