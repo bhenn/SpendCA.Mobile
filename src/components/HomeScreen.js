@@ -57,7 +57,7 @@ class HomeScreen extends React.Component {
                     <FlatList
                         renderItem={this._renderItem}
                         data={this.props.spends_filtered}
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item.id.toString()}
                         onRefresh={() => this.props.spendsFetch()}
                         refreshing={this.props.isLoading}
                     />
