@@ -1,8 +1,8 @@
 import {
     CHANGE_EMAIL,
-    CHANGE_NAME,
-    CHANGE_PASSWORD,
     CHANGE_TOKEN,
+    CHANGE_PASSWORD,
+    CHANGE_NAME,
     REGISTER_USER_ERROR,
     LOGIN_ERROR,
     DO_LOGIN,
@@ -12,8 +12,9 @@ import {
     DO_LOGOUT
 } from "./types";
 import NavigationService from "../../NavigationService";
-import Config from "react-native-config";
 import { AsyncStorage } from 'react-native';
+import api from "../api";
+
 
 export const changeEmail = text => {
     return {
@@ -40,22 +41,14 @@ export const registerUser = (email, password, name) => {
     return dispatch => {
         dispatch({ type: REGISTER_USER_LOADING });
 
-        fetch(global.apiUrl + 'api/account', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password,
-            }),
-        }).then(user => {
-            dispatch({ type: REGISTER_USER_SUCCESS });
-            NavigationService.navigate("Login");
-        }).catch(error =>
-            dispatch({ type: REGISTER_USER_ERROR, payload: error.message })
-        );
+        api.post('account', { email, password })
+            .then(user => {
+                dispatch({ type: REGISTER_USER_SUCCESS });
+                NavigationService.navigate("Login");
+            })
+            .catch(error => {
+                dispatch({ type: REGISTER_USER_ERROR, payload: error.response.data })
+            })
 
     };
 };
@@ -64,33 +57,17 @@ export const doLogin = (email, password) => {
     return dispatch => {
         dispatch({ type: DO_LOGIN });
 
-        fetch(global.apiUrl + 'api/account/login', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password,
-            }),
-        })
-            .then(res => res.json().then(data => ({ ok: res.ok, body: data })))
+        api.post('account/login', { email, password })
             .then(res => {
-                if (res.ok) {
-                    AsyncStorage.setItem("login_token", res.body.token)
-                        .then(() => {
-                            dispatch({ type: LOGIN_SUCCESS, payload: res.body.token });
-                            NavigationService.navigate("App");
-                        });
-
-                } else {
-                    dispatch({ type: LOGIN_ERROR, payload: res.body })
-                }
-            }).catch(error =>
-                dispatch({ type: LOGIN_ERROR, payload: error.message })
-            );
-
+                AsyncStorage.setItem("login_token", res.data.token)
+                    .then(() => {
+                        dispatch({ type: LOGIN_SUCCESS, payload: res.data.token });
+                        NavigationService.navigate("App");
+                    });
+            })
+            .catch(error => {
+                dispatch({ type: LOGIN_ERROR, payload: error.response.data })
+            })
     };
 };
 
