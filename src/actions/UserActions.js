@@ -13,7 +13,7 @@ import {
 } from "./types";
 import NavigationService from "../../NavigationService";
 import { AsyncStorage } from 'react-native';
-import api from "../api";
+import api, { setToken, clearToken } from "../api";
 
 
 export const changeEmail = text => {
@@ -61,6 +61,7 @@ export const doLogin = (email, password) => {
             .then(res => {
                 AsyncStorage.setItem("login_token", res.data.token)
                     .then(() => {
+                        setToken(res.data.token)
                         dispatch({ type: LOGIN_SUCCESS, payload: res.data.token });
                         NavigationService.navigate("App");
                     });
@@ -75,6 +76,7 @@ export const getUserToken = () => {
     return dispatch =>
         AsyncStorage.getItem('login_token')
             .then((data) => {
+                setToken(data)
                 dispatch({ type: CHANGE_TOKEN, payload: data })
             })
 }
@@ -84,6 +86,7 @@ export const doLogout = () => {
     return dispatch => {
         AsyncStorage.removeItem('login_token')
             .then(() => {
+                clearToken()
                 dispatch({ type: DO_LOGOUT })
             })
     }

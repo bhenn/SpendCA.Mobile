@@ -12,17 +12,6 @@ class AuthLoadingScreen extends React.Component {
     // Fetch the token from storage then navigate to our appropriate place
     _bootstrapAsync = async () => {
 
-        // This will switch to the App screen or Auth screen and this loading
-        // screen will be unmounted and thrown away.
-        // this.props.navigation.navigate(userToken ? "App" : "Auth");
-        // setTimeout(() => {
-        // firebase.auth().onAuthStateChanged(user => {
-        //     this.props.navigation.navigate(user ? 'Home'  : 'Auth')
-        // })
-
-        // this.props.getUserToken().then(() => {
-        //     console.log('token', this.props.token)
-        // })
         this.props.getUserToken().then(() => {
             this.props.navigation.navigate(this.props.token ? 'Home'  : 'Auth')
         })
