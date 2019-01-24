@@ -44,6 +44,8 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 ...action.payload,
+                category_id: action.payload.category.id,
+                category_desc: action.payload.category.description,
                 value: action.payload.value.toString()
             };
 

@@ -19,7 +19,6 @@ import NavigationService from "../../NavigationService";
 
 class SpendAddScreen extends Component {
 
-
     constructor(props) {
         super(props);
 
@@ -130,7 +129,6 @@ class SpendAddScreen extends Component {
 
         return (
             <View style={styles.container}>
-                <Text>ID: {this.props.id}</Text>
                 <View style={styles.valueContainer}>
                     <TextInputMask
                         ref={ref => (this._valueInput = ref)}
