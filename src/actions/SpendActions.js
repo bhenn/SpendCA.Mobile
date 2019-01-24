@@ -69,6 +69,7 @@ export const filterSpends = text => {
 };
 
 
+
 export const addSpend = (spend) => {
 
     const { description, location, value, category_id, date } = spend
@@ -104,23 +105,16 @@ export const alterSpend = (spend) => {
 }
 
 export const deleteSpend = (id) => {
-    // let email = b64.encode(firebase.auth().currentUser.email);
 
-    // if (uid == '' || uid == undefined) {
-    //     return {
-    //         type: REMOVE_SPEND_ERROR,
-    //         payload: 'UID not informed'
-    //     }
-    // }
+    return dispatch => {
+        api.delete("spends/" + id)
+            .then(() => removeSpendSuccess(dispatch, id))
+            .catch((error) => {
+                console.warn(error)
+                removeSpendError(error.response.data, dispatch)
+            })
+    }
 
-    // return dispatch => {
-    //     firebase
-    //         .database()
-    //         .ref(`spend/${email}/${uid}`)
-    //         .remove()
-    //         .then(() => removeSpendSuccess(dispatch))
-    //         .catch(error => removeSpendError(dispatch, error));
-    // };
 }
 
 export const changeSpend = spend => {
@@ -130,8 +124,25 @@ export const changeSpend = spend => {
     }
 }
 
+export const spendsFetch = () => {
+
+    return dispatch => {
+
+        dispatch({ type: SPEND_FETCH_START })
+
+        api.get('spends')
+            .then(res => {
+                dispatch({ type: LIST_SPENDS, payload: res.data })
+                dispatch({ type: SPEND_FETCH_FINISHED })
+            })
+            .catch(error => console.warn(error.message))
+
+    };
+};
+
 const addSpendSuccess = dispatch => {
-    dispatch({type: ADD_SPEND_SUCCESS});
+    dispatch(spendsFetch())
+    dispatch({ type: ADD_SPEND_SUCCESS });
     NavigationService.navigate('Home')
 };
 
@@ -154,32 +165,13 @@ const alterSpendError = dispatch => {
     });
 };
 
-const removeSpendSuccess = dispatch => {
-    dispatch({
-        type: REMOVE_SPEND_SUCCESS
-    });
+const removeSpendSuccess = (dispatch) => {
+    dispatch(spendsFetch())
+    dispatch({type: REMOVE_SPEND_SUCCESS})
     NavigationService.navigate('Home')
 };
 
-const removeSpendError = dispatch => {
-    dispatch({
-        type: REMOVE_SPEND_ERROR
-    });
-};
-
-
-export const spendsFetch = () => {
-
-    return dispatch => {
-
-        dispatch({ type: SPEND_FETCH_START })
-
-        api.get('spends')
-            .then(res => {
-                dispatch({ type: LIST_SPENDS, payload: res.data })
-                dispatch({ type: SPEND_FETCH_FINISHED })
-            })
-            .catch(error => console.warn(error.message))
-
-    };
+const removeSpendError = (error, dispatch) => {
+    console.warn(error)
+    dispatch({ type: REMOVE_SPEND_ERROR })
 };

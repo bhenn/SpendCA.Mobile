@@ -19,12 +19,6 @@ export default (state = INITIAL_STATE, action) => {
             var spends
             var spends_filtered
 
-            // TODO Review date and other fields
-
-            // spends = _.map(action.payload, (val, uid) => {
-            //     return { ...val }
-            // })
-
             spends = action.payload;
 
             if (state.filter_category != '') {
