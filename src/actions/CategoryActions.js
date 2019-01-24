@@ -20,6 +20,7 @@ export const addCategory = (description) => {
     return dispatch => {
         api.post("categories", {description: description})
             .then(cat => {
+                dispatch(categoryFetch())
                 dispatch({type: CATEGORY_ADD_SUCCESS})
                 NavigationService.navigate("Categories")
             })
