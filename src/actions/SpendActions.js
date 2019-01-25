@@ -153,6 +153,7 @@ const addSpendError = dispatch => {
 };
 
 const alterSpendSuccess = dispatch => {
+    dispatch(spendsFetch())
     dispatch({
         type: ALTER_SPEND_SUCCESS
     });

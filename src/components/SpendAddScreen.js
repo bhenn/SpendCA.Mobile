@@ -70,7 +70,7 @@ class SpendAddScreen extends Component {
         const { id, description, location, category_id, date } = this.props
 
         if (this.props.id != null) {
-            this.props.alterSpend({ id, description, location, category_id, date });
+            this.props.alterSpend({ id, description, location, category_id, date, value });
         } else {
             this.props.addSpend({ description, location, category_id, date, value });
         }
