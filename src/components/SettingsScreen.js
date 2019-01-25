@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { categoryFetch } from "../actions/CategoryActions";
 import { doLogout } from '../actions/UserActions'
 import NavigationService from "../../NavigationService";
-import firebase from "firebase";
 
 const list = [
     {
@@ -36,7 +35,8 @@ class SettingsScreen extends React.Component {
     }
 
     _logout() {
-        firebase.auth().signOut().then(() => {this.props.doLogout()});
+        this.props.doLogout();
+        NavigationService.navigate("Login");
     }
 
     render() {

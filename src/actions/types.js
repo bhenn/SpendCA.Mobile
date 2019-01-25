@@ -1,8 +1,13 @@
+//ALL
+export const RESET = 'reset'
+
+
 //USER
 export const CHANGE_EMAIL = 'change_email'
 export const CHANGE_PASSWORD = 'change_password'
 export const CHANGE_NAME = 'change_name'
 export const CHANGE_DATE = 'change_date'
+export const CHANGE_TOKEN = 'change_token'
 
 export const LOGIN_SUCCESS = 'login_success'
 export const LOGIN_ERROR = 'login_error'

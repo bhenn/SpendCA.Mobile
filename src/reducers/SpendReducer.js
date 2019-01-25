@@ -13,11 +13,12 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-    uid: '',
+    id: null,
     description: '',
     location: '',
     value: '',
-    category: '',
+    category_id: null,
+    category_desc: '',
     date: ''
 };
 
@@ -25,7 +26,7 @@ export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case CHANGE_DESCRIPTION:
             return { ...state, description: action.payload };
- 
+
         case CHANGE_LOCATION:
             return { ...state, location: action.payload };
 
@@ -33,7 +34,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, value: action.payload };
 
         case CHANGE_CATEGORY:
-            return { ...state, category: action.payload };
+            const { category_id, category_desc } = action.payload
+            return { ...state, category_id, category_desc };
 
         case CHANGE_DATE:
             return { ...state, date: action.payload };
@@ -42,20 +44,22 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 ...action.payload,
+                category_id: action.payload.category.id,
+                category_desc: action.payload.category.description,
                 value: action.payload.value.toString()
             };
 
         case PRE_ADD_SPEND:
-            return { ...state, category: '', value: '0', description: '', location: '', uid: '', date: new Date() };
+            return { ...state, category_desc: '', category_id: null, value: '0', description: '', location: '', id: null, date: new Date() };
 
         case ADD_SPEND_SUCCESS:
-            return { ...state, category: '', value: '', description: '', location: '' };
+            return { ...state, category_desc: '', category_id: null, value: '', description: '', location: '' };
 
         case ADD_SPEND_ERROR:
             return state;
 
         case ALTER_SPEND_SUCCESS:
-            return { ...state, category: '', value: '', description: '', location: '', uid: '' };
+            return { ...state, category: '', value: '', description: '', location: '', id: null };
 
         case ALTER_SPEND_ERROR:
             return state;

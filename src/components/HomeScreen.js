@@ -23,12 +23,7 @@ class HomeScreen extends React.Component {
 
     _renderItem = ({ item }) => (
         <SpendItem
-            description={item.description}
-            location={item.location}
-            category={item.category}
-            value={item.value}
-            date={item.date}
-            uid={item.uid}
+            spend={item}
         />
     )
 
@@ -62,7 +57,9 @@ class HomeScreen extends React.Component {
                     <FlatList
                         renderItem={this._renderItem}
                         data={this.props.spends_filtered}
-                        keyExtractor={item => item.uid}
+                        keyExtractor={item => item.id.toString()}
+                        onRefresh={() => this.props.spendsFetch()}
+                        refreshing={this.props.isLoading}
                     />
                 </View>
                 <View style={styles.totalContainer}>
