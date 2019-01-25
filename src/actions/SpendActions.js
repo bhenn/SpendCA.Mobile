@@ -17,9 +17,8 @@ import {
     SPEND_FETCH_START,
     SPEND_FETCH_FINISHED,
 } from "../actions/types";
-import b64 from "base-64";
-import firebase from "firebase";
 import NavigationService from "../../NavigationService";
+import api from '../api';
 
 export const changeDescription = text => {
     return {
@@ -42,10 +41,10 @@ export const changeValue = text => {
     };
 };
 
-export const changeCategory = text => {
+export const changeCategory = (category_id, category_desc) => {
     return {
         type: CHANGE_CATEGORY,
-        payload: text
+        payload: { category_id, category_desc }
     };
 };
 
@@ -70,60 +69,52 @@ export const filterSpends = text => {
 };
 
 
-export const addSpend = (description, location, value, category, date) => {
 
-    let email = b64.encode(firebase.auth().currentUser.email);
+export const addSpend = (spend) => {
 
-    //TODO - Find a better way to convert to number
-    value = Number(value)
-    date = date.toString()
+    const { description, location, value, category_id, date } = spend
 
     return dispatch => {
-        firebase
-            .database()
-            .ref(`spend/${email}`)
-            .push({ description, location, value, category, date })
-            .then(() => addSpendSuccess(dispatch))
-            .catch(error => addSpendError(dispatch, error));
-    };
+        api.post("spends", { description, location, value, categoryId: category_id, date })
+            .then(spend => {
+                addSpendSuccess(dispatch)
+            })
+            .catch(error => {
+                console.warn(error);
+                addSpendError(dispatch, error.message)
+            })
+    }
+
 };
 
 export const alterSpend = (spend) => {
-    let email = b64.encode(firebase.auth().currentUser.email);
-    let { value, description, location, date, category, uid } = spend
 
-    //TODO - Find a better way to convert to number
-    value = Number(value)
-    date = date.toString()
+    const { id, description, location, value, category_id, date } = spend
 
     return dispatch => {
-        firebase
-            .database()
-            .ref(`spend/${email}/${uid}`)
-            .set({ description, location, value, category, date })
-            .then(() => alterSpendSuccess(dispatch))
-            .catch(error => alterSpendError(dispatch, error));
-    };
-}
-
-export const deleteSpend = (uid) => {
-    let email = b64.encode(firebase.auth().currentUser.email);
-
-    if (uid == '' || uid == undefined) {
-        return {
-            type: REMOVE_SPEND_ERROR,
-            payload: 'UID not informed'
-        }
+        api.put("spends/" + id, { id, description, location, value, categoryId: category_id, date })
+            .then(() => {
+                alterSpendSuccess(dispatch)
+            })
+            .catch(error => {
+                console.warn(error.message);
+                alterSpendError(dispatch, error.message)
+            })
     }
 
+}
+
+export const deleteSpend = (id) => {
+
     return dispatch => {
-        firebase
-            .database()
-            .ref(`spend/${email}/${uid}`)
-            .remove()
-            .then(() => removeSpendSuccess(dispatch))
-            .catch(error => removeSpendError(dispatch, error));
-    };
+        api.delete("spends/" + id)
+            .then(() => removeSpendSuccess(dispatch, id))
+            .catch((error) => {
+                console.warn(error)
+                removeSpendError(error.response.data, dispatch)
+            })
+    }
+
 }
 
 export const changeSpend = spend => {
@@ -133,10 +124,25 @@ export const changeSpend = spend => {
     }
 }
 
+export const spendsFetch = () => {
+
+    return dispatch => {
+
+        dispatch({ type: SPEND_FETCH_START })
+
+        api.get('spends')
+            .then(res => {
+                dispatch({ type: LIST_SPENDS, payload: res.data })
+                dispatch({ type: SPEND_FETCH_FINISHED })
+            })
+            .catch(error => console.warn(error.message))
+
+    };
+};
+
 const addSpendSuccess = dispatch => {
-    dispatch({
-        type: ADD_SPEND_SUCCESS
-    });
+    dispatch(spendsFetch())
+    dispatch({ type: ADD_SPEND_SUCCESS });
     NavigationService.navigate('Home')
 };
 
@@ -147,6 +153,7 @@ const addSpendError = dispatch => {
 };
 
 const alterSpendSuccess = dispatch => {
+    dispatch(spendsFetch())
     dispatch({
         type: ALTER_SPEND_SUCCESS
     });
@@ -159,35 +166,13 @@ const alterSpendError = dispatch => {
     });
 };
 
-const removeSpendSuccess = dispatch => {
-    dispatch({
-        type: REMOVE_SPEND_SUCCESS
-    });
+const removeSpendSuccess = (dispatch) => {
+    dispatch(spendsFetch())
+    dispatch({type: REMOVE_SPEND_SUCCESS})
     NavigationService.navigate('Home')
 };
 
-const removeSpendError = dispatch => {
-    dispatch({
-        type: REMOVE_SPEND_ERROR
-    });
-};
-
-
-export const spendsFetch = () => {
-
-    return dispatch => {
-
-        dispatch({ type: SPEND_FETCH_START })
-
-        let email = b64.encode(firebase.auth().currentUser.email);
-
-        firebase
-            .database()
-            .ref(`spend/${email}`)
-            .on("value", snapshot => {
-                dispatch({ type: LIST_SPENDS, payload: snapshot.val() });
-                dispatch({ type: SPEND_FETCH_FINISHED })
-            })
-        
-    };
+const removeSpendError = (error, dispatch) => {
+    console.warn(error)
+    dispatch({ type: REMOVE_SPEND_ERROR })
 };

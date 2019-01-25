@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Alert, TextInput } from "react-native";
 import { Input, Button, Text, Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import {
@@ -12,14 +12,19 @@ import {
     alterSpend,
     deleteSpend
 } from "../actions/SpendActions";
-import { categoryFetch } from "../actions/CategoryActions";
-import SimplePicker from "react-native-simple-picker";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import moment from "moment";
 import { TextInputMask } from "react-native-masked-text";
-
+import NavigationService from "../../NavigationService";
 
 class SpendAddScreen extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.inputRefs = {};
+    }
+
     static navigationOptions = ({ navigation }) => {
         return {
             headerTintColor: "white",
@@ -38,11 +43,10 @@ class SpendAddScreen extends Component {
     }
 
     state = {
-        datePickerVisible: false
+        datePickerVisible: false,
     };
 
     componentWillMount() {
-        this.props.categoryFetch();
     }
 
     componentDidMount() {
@@ -63,23 +67,12 @@ class SpendAddScreen extends Component {
             value = parseFloat(this.props.value)
         }
 
-        if (this.props.uid != "") {
-            this.props.alterSpend({
-                uid: this.props.uid,
-                description: this.props.description,
-                location: this.props.location,
-                value: value,
-                category: this.props.category,
-                date: this.props.date
-            });
+        const { id, description, location, category_id, date } = this.props
+
+        if (this.props.id != null) {
+            this.props.alterSpend({ id, description, location, category_id, date, value });
         } else {
-            this.props.addSpend(
-                this.props.description,
-                this.props.location,
-                value,
-                this.props.category,
-                this.props.date
-            );
+            this.props.addSpend({ description, location, category_id, date, value });
         }
     }
 
@@ -95,7 +88,7 @@ class SpendAddScreen extends Component {
         if (Number(this.props.value) == 0 || this.props.value == undefined)
             error = error.concat('Value is required \n')
 
-        if (Number(this.props.category) == 0 || this.props.category == undefined)
+        if (this.props.category_id == null || this.props.category_id == undefined || this.props.category_id == 0)
             error = error.concat('Category is required \n')
 
         return error
@@ -107,17 +100,15 @@ class SpendAddScreen extends Component {
             'Delete spend?',
             [
                 { text: 'Cancel', onPress: () => false, style: 'cancel' },
-                { text: 'Delete', onPress: () => this.props.deleteSpend(this.props.uid) },
+                { text: 'Delete', onPress: () => this.props.deleteSpend(this.props.id) },
             ],
             { cancelable: false }
         )
-
-
     }
 
     render() {
         let deleteButton;
-        if (this.props.uid != undefined && this.props.uid != "") {
+        if (this.props.id != undefined && this.props.id != 0) {
             deleteButton = (
                 <Button
                     style={{ marginTop: 15, }}
@@ -178,22 +169,14 @@ class SpendAddScreen extends Component {
                         value={this.props.location}
                         onChangeText={text => this.props.changeLocation(text)}
                     />
-                    <TouchableOpacity onPress={() => this.refs.picker.show()}>
+                    <TouchableOpacity onPress={() => NavigationService.navigate("CategorySelect")}>
                         <Input
                             label={'Category'}
-                            value={this.props.category}
+                            value={this.props.category_desc}
                             editable={false}
                             pointerEvents="none"
-                            onPress={() => this.refs.picker.show()}
                         />
                     </TouchableOpacity>
-                    <SimplePicker
-                        ref={"picker"}
-                        options={this.props.categories_array}
-                        onSubmit={option => {
-                            this.props.changeCategory(option);
-                        }}
-                    />
                 </View>
                 <View style={styles.buttonContainer}>
                     {deleteButton}
@@ -204,25 +187,24 @@ class SpendAddScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-    uid: state.SpendReducer.uid,
+    id: state.SpendReducer.id,
     value: state.SpendReducer.value,
     description: state.SpendReducer.description,
     location: state.SpendReducer.location,
     date: state.SpendReducer.date,
-    category: state.SpendReducer.category,
-    categories_array: state.CategoryListReducer.categories_array
+    category_id: state.SpendReducer.category_id,
+    category_desc: state.SpendReducer.category_desc,
 });
 
 export default connect(
     mapStateToProps,
     {
         changeDescription,
-        changeLocation, 
+        changeLocation,
         changeValue,
         changeCategory,
         changeDate,
         addSpend,
-        categoryFetch,
         alterSpend,
         deleteSpend
     }
@@ -231,11 +213,12 @@ export default connect(
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
         backgroundColor: 'white',
     },
     valueContainer: {
-        flex: 1,
+        flex: 0.5,
         justifyContent: 'center',
     },
     dataContainer: {
@@ -243,7 +226,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     buttonContainer: {
-        flex: 1,
+        flex: 0.5,
         justifyContent: 'center',
     },
     inputValue: {
@@ -255,3 +238,4 @@ const styles = StyleSheet.create({
         color: '#457B9D',
     }
 });
+

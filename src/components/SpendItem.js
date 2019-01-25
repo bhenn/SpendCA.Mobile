@@ -16,18 +16,18 @@ class SpendItem extends React.PureComponent {
     render() {
 
         return (
-            <TouchableOpacity onPress={() => this._changeSpend({date: this.props.date, category: this.props.category, description: this.props.description, location: this.props.location, value: this.props.value, uid: this.props.uid })}>
+            <TouchableOpacity onPress={() => this._changeSpend(this.props.spend)}>
                 <View style={styles.line}>
                     <View style={{flex: 0.5}}>
-                        <Text style={styles.month}>{moment(new Date(this.props.date)).format('MMM')}</Text>
-                        <Text style={styles.day}>{moment(new Date(this.props.date)).format('DD')}</Text>
+                        <Text style={styles.month}>{moment(new Date(this.props.spend.date)).format('MMM')}</Text>
+                        <Text style={styles.day}>{moment(new Date(this.props.spend.date)).format('DD')}</Text>
                     </View>
                     <View style={{flex: 3}}>
-                        <Text style={styles.category}>{this.props.category}</Text>
-                        <Text style={styles.description}>{this.props.description}</Text>
+                        <Text style={styles.category}>{this.props.spend.category.description}</Text>
+                        <Text style={styles.description}>{this.props.spend.description}</Text>
                     </View>
                     <View style={{flex: 1}}>
-                        <Text style={styles.amount}>{Dinero({amount: this.props.value}).toFormat()}</Text>
+                        <Text style={styles.amount}>{Dinero({amount: this.props.spend.value}).toFormat()}</Text>
                     </View>
                 </View>
             </TouchableOpacity>

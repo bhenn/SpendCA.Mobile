@@ -2,10 +2,14 @@ import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import MaskInput from './MaskInput'
 import Input  from "./Input";
+import Picker from "./Picker"
 
+
+storiesOf('Picker', module).add('Picker', () => <Picker/>);
 storiesOf('Mask Input', module).add('INPUT', () => <MaskInput/>);
-
 storiesOf('Input', module).add('Shake', () => <Input/>);
+
+
 
 // storiesOf('Button', module)
 //   .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)

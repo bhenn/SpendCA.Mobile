@@ -19,20 +19,18 @@ export default (state = INITIAL_STATE, action) => {
             var spends
             var spends_filtered
 
-            spends = _.map(action.payload, (val, uid) => {
-                return { ...val, uid }
-            })
+            spends = action.payload;
 
             if (state.filter_category != '') {
-                spends_filtered = spends.filter(spend => spend.category === state.filter_category)
+                spends_filtered = spends.filter(spend => spend.category.description === state.filter_category)
             } else {
                 spends_filtered = spends
             }
             total = _.sumBy(spends_filtered, 'value')
 
-            const categories = _.chain(spends).groupBy('category').map((val, uid) => {
+            const categories = _.chain(spends).groupBy('category.description').map((val, id) => {
                 return {
-                    category: uid,
+                    category: id,
                     sum: _.sumBy(val, 'value')
                 }
             }).value()
@@ -44,7 +42,7 @@ export default (state = INITIAL_STATE, action) => {
             var spends_filtered
 
             if (filter != '') {
-                spends_filtered = state.spends.filter(spend => spend.category === action.payload)
+                spends_filtered = state.spends.filter(spend => spend.category.description === action.payload)
             } else {
                 spends_filtered = state.spends
             }
@@ -59,7 +57,7 @@ export default (state = INITIAL_STATE, action) => {
         case SPEND_FETCH_FINISHED:
             return { ...state, isLoading: false }
 
-
+        
         default:
             return state
     }

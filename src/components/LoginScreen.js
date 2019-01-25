@@ -10,8 +10,29 @@ class loginScreen extends Component {
         header: null
     };
 
+    _doLogin() {
+        let error = this._validate()
+        if (error != '') {
+            alert(error)
+            return false
+        }
+
+        this.props.doLogin(this.props.email, this.props.password)
+    }
+
+    _validate() {
+        let error = ''
+        if (this.props.email == undefined || this.props.email.trim() == '')
+            error = error.concat('Email is required \n')
+
+        if (this.props.password == undefined || this.props.password.trim() == '')
+            error = error.concat('Password is required \n')
+
+        return error
+    }
+
     render() {
-        return (            
+        return (
             <ImageBackground source={require('../../background.jpeg')} style={styles.container}>
                 <View style={styles.overlay}>
                     <View style={styles.logo}>
@@ -47,14 +68,9 @@ class loginScreen extends Component {
                         </Text>
                         <Button
                             title="Login"
-                            onPress={() =>
-                                this.props.doLogin(
-                                    this.props.email,
-                                    this.props.password
-                                )
-                            }
+                            onPress={() => this._doLogin()}
                             buttonStyle={{ backgroundColor: '#E63946', height: 40, width: 300 }}
-                            style={{marginTop: 120, marginBottom: 10 }}
+                            style={{ marginTop: 120, marginBottom: 10 }}
                             loadingProps={{ size: "small", color: "white" }}
                             disabled={this.props.loadingLogin}
                             disabledStyle={{ backgroundColor: '#BC2E24' }}

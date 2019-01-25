@@ -1,13 +1,12 @@
 import {
     CATEGORY_LIST,
     CATEGORY_CHANGE_DESCRIPTION,
-    CATEGORY_ADD_ERROR, 
+    CATEGORY_ADD_ERROR,
     CATEGORY_ADD_SUCCESS,
-    
+
 } from "../actions/types";
-import b64 from "base-64";
-import firebase from "firebase";
 import NavigationService from "../../NavigationService";
+import api from '../api'
 
 export const changeDescription = text => {
     return {
@@ -18,30 +17,24 @@ export const changeDescription = text => {
 
 export const addCategory = (description) => {
 
-    let email = b64.encode(firebase.auth().currentUser.email);
-
     return dispatch => {
-        firebase
-            .database()
-            .ref(`category/${email}`)
-            .push({ description })
-            .then(() => {
+        api.post("categories", {description: description})
+            .then(cat => {
+                dispatch(categoryFetch())
                 dispatch({type: CATEGORY_ADD_SUCCESS})
-                NavigationService.navigate("Categories");
+                NavigationService.navigate("Categories")
             })
-            .catch(error => dispatch({type: CATEGORY_ADD_ERROR, payload: error.message}));
-    };
+            .catch(error => console.warn(error.message))
+    }
+
 };
 
 export const categoryFetch = () => {
-    let email = b64.encode(firebase.auth().currentUser.email);
 
     return dispatch => {
-        firebase
-            .database()
-            .ref(`category/${email}`)
-            .on("value", snapshot => {
-                dispatch({ type: CATEGORY_LIST, payload: snapshot.val() });
-            });
-    };
+        api.get("categories")
+            .then(res => dispatch({ type: CATEGORY_LIST, payload: res.data }))
+            .catch(error => console.warn(error.message))
+    }
+
 };

@@ -4,13 +4,20 @@ import UserReducer from "./UserReducer";
 import SpendListReducer from "./SpendListReducer";
 import CategoryListReducer from "./CategoryListReducer";
 import CategoryReducer from "./CategoryReducer";
+import { RESET } from '../actions/types';
 
-
-
-export default combineReducers({
+const appReducer = combineReducers({
     SpendReducer,
     UserReducer,
     SpendListReducer,
     CategoryListReducer,
     CategoryReducer
-}) 
+})
+
+export default rootReducer = (state, action) => {
+    if (action.type == RESET) {
+        state = undefined; 
+    }
+
+    return appReducer(state, action);
+}
