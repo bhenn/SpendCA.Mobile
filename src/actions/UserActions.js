@@ -41,8 +41,9 @@ export const changeName = text => {
 export const registerUser = (email, password, name) => {
     return dispatch => {
         dispatch({ type: REGISTER_USER_LOADING });
+        clearToken()
 
-        api.post('account', { email, password })
+        api.post('account', { email, password, name })
             .then(user => {
                 dispatch({ type: REGISTER_USER_SUCCESS });
                 NavigationService.navigate("Login");
@@ -57,6 +58,7 @@ export const registerUser = (email, password, name) => {
 export const doLogin = (email, password) => {
     return dispatch => {
         dispatch({ type: DO_LOGIN });
+        clearToken()
 
         api.post('account/login', { email, password })
             .then(res => {
@@ -92,5 +94,16 @@ export const doLogout = () => {
                 dispatch({ type: RESET })
             })
     }
+}
+
+const dealWithError = (error) => {
+    // if (error){
+    //     if (error.response.data)
+    //         return error.response.data;
+
+    //     if (error.response)
+    // }else{
+    //     return ''
+    // }
 }
 

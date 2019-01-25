@@ -10,11 +10,10 @@ instance.defaults.headers.common["Content-Type"] = "application/json"
 
 export function setToken(token) {
   instance.defaults.headers.common["authorization"] = "Bearer " + token;
-  console.log('token', instance.defaults.headers.common["authorization"])
 }
 
 export function clearToken(){
-  instance.defaults.headers.common["authorization"] = '';
+  delete instance.defaults.headers.common["authorization"]
 }
 
 export default instance;
