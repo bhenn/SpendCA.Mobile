@@ -1,3 +1,7 @@
+//ALL
+export const RESET = 'reset'
+
+
 //USER
 export const CHANGE_EMAIL = 'change_email'
 export const CHANGE_PASSWORD = 'change_password'

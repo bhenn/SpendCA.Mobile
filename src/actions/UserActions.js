@@ -9,7 +9,8 @@ import {
     REGISTER_USER_LOADING,
     REGISTER_USER_SUCCESS,
     LOGIN_SUCCESS,
-    DO_LOGOUT
+    DO_LOGOUT,
+    RESET
 } from "./types";
 import NavigationService from "../../NavigationService";
 import { AsyncStorage } from 'react-native';
@@ -88,6 +89,7 @@ export const doLogout = () => {
             .then(() => {
                 clearToken()
                 dispatch({ type: DO_LOGOUT })
+                dispatch({ type: RESET })
             })
     }
 }
